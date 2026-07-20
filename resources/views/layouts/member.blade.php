@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OHC Member Portal</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="bg-white font-sans antialiased">
+    @php
+        // Simple active-link detection so "Dashboard" (or whichever section
+        // you're on) gets the teal underline state shown in the concept.
+        $navLinks = [
+            ['label' => 'Dashboard',       'href' => '/dashboard',   'active' => request()->is('dashboard')],
+            ['label' => 'My Courses',      'href' => '/courses',     'active' => request()->is('courses*')],
+            ['label' => 'Live Trade Room', 'href' => '/live',        'active' => request()->is('live*')],
+            ['label' => 'Workshops',       'href' => '/workshops',   'active' => request()->is('workshops*')],
+            ['label' => 'Market Hub',      'href' => '/market-hub',  'active' => request()->is('market-hub*')],
+            ['label' => 'Community',       'href' => '/community',   'active' => request()->is('community*')],
+        ];
+
+        $displayName = Auth::user()->first_name ?? Auth::user()->name;
+        $initial = strtoupper(substr($displayName, 0, 1));
+    @endphp
+
+    {{-- Member portal nav: deliberately NOT using the shared `.nav` class
+         (that one is white/light and belongs to the public marketing site).
+         This merges seamlessly with the dark hero below, like the concept. --}}
+    <nav class="sticky top-0 z-50 bg-[#0f1e3a] border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+
+            {{-- Logo: coded (SVG + text), not an <img>, so it never depends on
+                 an asset existing and always renders correctly on the dark nav. --}}
+            <a href="/" class="flex items-center gap-2.5 flex-shrink-0">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 17a9 9 0 0 1 18 0" stroke="#2394A0" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+                <span class="flex items-baseline gap-2">
+                    <span class="text-white font-extrabold text-xl tracking-tight">OHC</span>
+                    <span class="text-gray-400 text-[11px] font-semibold tracking-[0.15em] uppercase">Trade Room</span>
+                </span>
+            </a>
+
+            {{-- Nav links --}}
+            <div class="hidden md:flex items-center space-x-8">
+                @foreach ($navLinks as $link)
+                    <a href="{{ $link['href'] }}"
+                       class="font-semibold text-sm transition pb-1 border-b-2
+                              {{ $link['active']
+                                    ? 'text-[#2394a0] border-[#2394a0]'
+                                    : 'text-gray-300 border-transparent hover:text-white' }}">
+                        {{ $link['label'] }}
+                    </a>
+                @endforeach
+            </div>
+
+            {{-- User avatar: letter-only implementation — no image is ever
+                 requested, so there's nothing to break or 404 on. --}}
+            <div class="flex items-center flex-shrink-0">
+                <div class="user-avatar-btn w-10 h-10 rounded-full bg-[#3d4f6e] flex items-center justify-center cursor-pointer hover:bg-[#2394a0] transition" title="{{ $displayName }}">
+                    <span class="font-bold text-white text-sm">{{ $initial }}</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        @yield('content')
+    </main>
+</body>
+</html>

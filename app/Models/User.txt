@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Models;
+
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
+{
+    /** @use HasFactory<UserFactory> */
+    use HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'kajabi_user_id',
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'avatar_url',
+        'current_path',
+        'status',
+        'last_login_at',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+
+    public function entitlements()
+    {
+        return $this->hasMany(MemberEntitlement::class);
+    }
+    
+    /**
+     * Check if the user owns a specific product or belongs to a specific path.
+     */
+    public function hasAccessTo($productNameOrPath)
+    {
+        // 1. If they are an 'Ultimate' member, they have access to everything
+        if ($this->current_path === 'Ultimate') return true;
+    
+        // 2. Check if they have the specific path (Bundle)
+        if ($this->current_path === $productNameOrPath) return true;
+    
+        // 3. Check if they own the standalone product in the entitlements table
+        return $this->entitlements()
+                    ->where('product_name', $productNameOrPath)
+                    ->where('status', 'Active')
+                    ->exists();
+    }
+}

@@ -1,0 +1,41 @@
+/* Filter Tabs */
+.filter-tab {
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #273a68;
+    border: 1px solid rgba(39, 58, 104, 0.1);
+    transition: all 0.3s ease;
+    background: white;
+}
+.filter-tab.active {
+    background: #273a68;
+    color: white;
+}
+.filter-tab:hover:not(.active) {
+    background: #f8fafc;
+    border-color: #2394a0;
+}
+
+/* Locked Card Overlay */
+.course-card--locked .card-thumbnail {
+    filter: grayscale(1);
+    opacity: 0.6;
+}
+.lock-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+}
+.btn-unlock {
+    background: #c59d33; /* Gold/Mustard from wireframe */
+    color: white;
+    padding: 6px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+}
