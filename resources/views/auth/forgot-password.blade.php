@@ -7,7 +7,7 @@
     <title>Reset Password - OHC Traderoom</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="ohc-auth-page">
+<body class="ohc-auth-page ohc-auth-reset-page">
     <main class="ohc-auth-shell">
         <section class="ohc-auth-panel">
             <a href="/" class="ohc-brand">
@@ -40,6 +40,9 @@
             <p class="ohc-eyebrow">Forgot password</p>
             <h2>Recover your account</h2>
             <p class="ohc-muted">We will email a reset link if the address belongs to an OHC Traderoom account.</p>
+            <div class="ohc-guided-cursor ohc-guided-cursor--reset" aria-hidden="true">
+                <span></span>
+            </div>
 
             <x-auth-session-status class="ohc-status" :status="session('status')" />
 

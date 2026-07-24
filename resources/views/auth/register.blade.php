@@ -7,7 +7,7 @@
     <title>Register - OHC Traderoom</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="ohc-auth-page">
+<body class="ohc-auth-page ohc-auth-register-page">
     <main class="ohc-auth-shell">
         <section class="ohc-auth-panel">
             <a href="/" class="ohc-brand">
@@ -46,6 +46,9 @@
             <p class="ohc-eyebrow">Sign up</p>
             <h2 class="ohc-register-card-title"><span>Start with OHC</span><span>Traderoom</span></h2>
             <p class="ohc-muted">Create your secure profile to access courses, live sessions, and member tools.</p>
+            <div class="ohc-guided-cursor ohc-guided-cursor--register" aria-hidden="true">
+                <span></span>
+            </div>
 
             <form method="POST" action="{{ route('register') }}" class="ohc-auth-form">
                 @csrf

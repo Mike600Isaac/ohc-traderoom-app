@@ -236,6 +236,7 @@
         background: rgba(248, 250, 252, .97);
         color: #0f172a;
         box-shadow: 0 28px 100px rgba(0, 0, 0, .34);
+        position: relative;
     }
 
     .ohc-register-card {
@@ -262,6 +263,78 @@
         margin: 10px 0 0;
         color: #64748b;
         line-height: 1.7;
+    }
+
+    .ohc-guided-cursor {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 12;
+        width: 32px;
+        height: 32px;
+        pointer-events: none;
+        filter: drop-shadow(0 12px 20px rgba(15, 118, 110, .35));
+        transform: translate(80px, 220px);
+    }
+
+    .ohc-guided-cursor::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 18px;
+        height: 24px;
+        background: linear-gradient(135deg, #ffffff 0%, #dffcf8 44%, #14b8a6 45%, #0f766e 100%);
+        border: 1px solid rgba(15, 118, 110, .5);
+        clip-path: polygon(0 0, 0 100%, 36% 76%, 53% 100%, 74% 88%, 58% 65%, 100% 65%);
+    }
+
+    .ohc-guided-cursor::after {
+        content: "";
+        position: absolute;
+        left: 15px;
+        top: 19px;
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+        background: #14b8a6;
+        box-shadow: 0 0 0 0 rgba(20, 184, 166, .35);
+        animation: ohcCursorTap 1.1s ease-in-out infinite;
+    }
+
+    .ohc-guided-cursor span {
+        position: absolute;
+        left: 23px;
+        top: 25px;
+        width: 88px;
+        height: 2px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(20, 184, 166, .6), transparent);
+        transform: rotate(22deg);
+        transform-origin: left center;
+        opacity: .76;
+    }
+
+    .ohc-guided-cursor--register {
+        animation: ohcRegisterCursor 10.5s cubic-bezier(.55, 0, .25, 1) infinite;
+    }
+
+    .ohc-guided-cursor--login {
+        animation: ohcLoginCursor 8s cubic-bezier(.55, 0, .25, 1) infinite;
+    }
+
+    .ohc-guided-cursor--reset {
+        animation: ohcResetCursor 6s cubic-bezier(.55, 0, .25, 1) infinite;
+    }
+
+    .ohc-guided-cursor--new-password {
+        animation: ohcNewPasswordCursor 7.5s cubic-bezier(.55, 0, .25, 1) infinite;
+    }
+
+    .ohc-auth-card:hover .ohc-guided-cursor,
+    .ohc-auth-card:focus-within .ohc-guided-cursor {
+        opacity: .28;
+        transition: opacity .2s ease;
     }
 
     .ohc-status {
@@ -371,6 +444,120 @@
         box-shadow: 0 14px 34px rgba(15, 118, 110, .28);
     }
 
+    @keyframes ohcCursorTap {
+        0%, 100% {
+            transform: scale(.72);
+            box-shadow: 0 0 0 0 rgba(20, 184, 166, .34);
+            opacity: .95;
+        }
+
+        55% {
+            transform: scale(1);
+            box-shadow: 0 0 0 14px rgba(20, 184, 166, 0);
+            opacity: .68;
+        }
+    }
+
+    @keyframes ohcRegisterCursor {
+        0%, 7% {
+            transform: translate(68px, 318px);
+        }
+
+        14%, 21% {
+            transform: translate(354px, 318px);
+        }
+
+        28%, 35% {
+            transform: translate(68px, 418px);
+        }
+
+        42%, 49% {
+            transform: translate(68px, 520px);
+        }
+
+        56%, 63% {
+            transform: translate(68px, 640px);
+        }
+
+        72%, 80% {
+            transform: translate(290px, 732px);
+        }
+
+        88%, 94% {
+            transform: translate(385px, 810px);
+        }
+
+        100% {
+            transform: translate(68px, 318px);
+        }
+    }
+
+    @keyframes ohcLoginCursor {
+        0%, 11% {
+            transform: translate(68px, 300px);
+        }
+
+        24%, 35% {
+            transform: translate(68px, 402px);
+        }
+
+        48%, 57% {
+            transform: translate(350px, 497px);
+        }
+
+        70%, 81% {
+            transform: translate(246px, 566px);
+        }
+
+        91%, 97% {
+            transform: translate(350px, 650px);
+        }
+
+        100% {
+            transform: translate(68px, 300px);
+        }
+    }
+
+    @keyframes ohcResetCursor {
+        0%, 18% {
+            transform: translate(68px, 318px);
+        }
+
+        42%, 60% {
+            transform: translate(240px, 408px);
+        }
+
+        78%, 92% {
+            transform: translate(332px, 500px);
+        }
+
+        100% {
+            transform: translate(68px, 318px);
+        }
+    }
+
+    @keyframes ohcNewPasswordCursor {
+        0%, 13% {
+            transform: translate(68px, 318px);
+        }
+
+        26%, 39% {
+            transform: translate(68px, 420px);
+        }
+
+        52%, 65% {
+            transform: translate(68px, 522px);
+        }
+
+        78%, 92% {
+            transform: translate(246px, 608px);
+        }
+
+        100% {
+            transform: translate(68px, 318px);
+        }
+    }
+
     .ohc-switch {
         margin: 24px 0 0;
         color: #64748b;
@@ -422,9 +609,19 @@
             grid-template-columns: 1fr;
         }
 
+        .ohc-guided-cursor {
+            display: none;
+        }
+
         .ohc-auth-row {
             align-items: flex-start;
             flex-direction: column;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ohc-guided-cursor {
+            display: none;
         }
     }
 }

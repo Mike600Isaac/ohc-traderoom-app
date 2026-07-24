@@ -7,7 +7,7 @@
     <title>Login - OHC Traderoom</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="ohc-auth-page">
+<body class="ohc-auth-page ohc-auth-login-page">
     <main class="ohc-auth-shell">
         <section class="ohc-auth-panel">
             <a href="/" class="ohc-brand">
@@ -55,6 +55,9 @@
             <p class="ohc-eyebrow">Sign in</p>
             <h2>Continue securely</h2>
             <p class="ohc-muted">Use the account created directly with OHC Traderoom.</p>
+            <div class="ohc-guided-cursor ohc-guided-cursor--login" aria-hidden="true">
+                <span></span>
+            </div>
 
             <x-auth-session-status class="ohc-status" :status="session('status')" />
 
