@@ -1,3 +1,430 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .ohc-auth-page {
+        margin: 0;
+        min-height: 100vh;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(45, 212, 191, .14), transparent 30%),
+            linear-gradient(135deg, #07111f 0%, #111827 45%, #162033 100%);
+        color: #f8fafc;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .ohc-auth-shell {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(420px, .95fr);
+    }
+
+    .ohc-auth-panel {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 22px;
+        min-width: 0;
+        padding: clamp(32px, 5vw, 72px);
+        border-right: 1px solid rgba(148, 163, 184, .18);
+    }
+
+    .ohc-brand {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        gap: 14px;
+        color: #f8fafc;
+        text-decoration: none;
+        font-weight: 800;
+    }
+
+    .ohc-brand-mark {
+        display: inline-grid;
+        place-items: center;
+        width: 72px;
+        height: 72px;
+        border: 1px solid rgba(45, 212, 191, .45);
+        border-radius: 50%;
+        color: #67e8f9;
+        font-size: 1.45rem;
+        letter-spacing: -.04em;
+    }
+
+    .ohc-brand-divider {
+        width: 1px;
+        height: 34px;
+        background: rgba(226, 232, 240, .34);
+    }
+
+    .ohc-auth-copy {
+        max-width: 760px;
+        margin: clamp(54px, 10vh, 110px) 0 20px;
+    }
+
+    .ohc-eyebrow {
+        margin: 0 0 12px;
+        color: #5eead4;
+        font-size: .78rem;
+        font-weight: 900;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+    }
+
+    .ohc-auth-copy h1 {
+        margin: 0;
+        color: #fff;
+        font-size: clamp(2.15rem, 3.65vw, 4rem);
+        font-weight: 900;
+        line-height: 1.08;
+    }
+
+    .ohc-title-line {
+        display: block;
+        white-space: nowrap;
+    }
+
+    .ohc-register-title {
+        font-size: clamp(2.05rem, 3.05vw, 3.35rem) !important;
+        line-height: 1.08 !important;
+    }
+
+    .ohc-auth-copy p:not(.ohc-eyebrow) {
+        max-width: 660px;
+        margin: 18px 0 0;
+        color: #cbd5e1;
+        font-size: 1.05rem;
+        line-height: 1.8;
+    }
+
+    .ohc-signal-card,
+    .ohc-security-list,
+    .ohc-fx-ticker {
+        width: min(100%, 760px);
+        max-width: 760px;
+        border: 1px solid rgba(148, 163, 184, .18);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, .66);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, .28);
+    }
+
+    .ohc-signal-card {
+        min-height: 232px;
+        padding: 26px 28px;
+    }
+
+    .ohc-fx-ticker {
+        overflow: hidden;
+        padding: 12px 0;
+        margin: 0 0 10px;
+    }
+
+    .ohc-fx-track {
+        display: inline-flex;
+        min-width: max-content;
+        gap: 22px;
+        animation: ohcFxTape 24s linear infinite;
+    }
+
+    .ohc-fx-track span {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #94a3b8;
+        font-size: .78rem;
+        font-weight: 900;
+        letter-spacing: .08em;
+    }
+
+    .ohc-fx-track strong {
+        color: #5eead4;
+    }
+
+    @keyframes ohcFxTape {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-50%);
+        }
+    }
+
+    .ohc-signal-card > div:first-child {
+        display: flex;
+        justify-content: space-between;
+        color: #94a3b8;
+        font-size: .85rem;
+    }
+
+    .ohc-signal-card strong {
+        color: #5eead4;
+    }
+
+    .ohc-bars {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 14px;
+        align-items: end;
+        height: 162px;
+        margin-top: 20px;
+    }
+
+    .ohc-bars i {
+        display: block;
+        border-radius: 4px 4px 0 0;
+        background: linear-gradient(180deg, #67e8f9, #0f766e);
+        transform-origin: bottom;
+        animation: ohcSignalPulse 2.4s ease-in-out infinite alternate;
+        box-shadow: 0 0 22px rgba(94, 234, 212, .18);
+    }
+
+    .ohc-bars i:nth-child(2) {
+        animation-delay: .2s;
+    }
+
+    .ohc-bars i:nth-child(3) {
+        animation-delay: .45s;
+    }
+
+    .ohc-bars i:nth-child(4) {
+        animation-delay: .1s;
+    }
+
+    .ohc-bars i:nth-child(5) {
+        animation-delay: .35s;
+    }
+
+    .ohc-bars i:nth-child(6) {
+        animation-delay: .6s;
+    }
+
+    @keyframes ohcSignalPulse {
+        from {
+            transform: scaleY(.72);
+            opacity: .78;
+        }
+
+        to {
+            transform: scaleY(1);
+            opacity: 1;
+        }
+    }
+
+    .ohc-security-list {
+        display: grid;
+        gap: 12px;
+        padding: 22px;
+        margin: 0;
+        list-style: none;
+    }
+
+    .ohc-security-list li {
+        color: #e2e8f0;
+        font-weight: 800;
+    }
+
+    .ohc-auth-card {
+        align-self: center;
+        justify-self: center;
+        width: min(520px, calc(100% - 48px));
+        max-height: calc(100vh - 48px);
+        overflow: auto;
+        padding: clamp(28px, 4vw, 44px);
+        border: 1px solid rgba(226, 232, 240, .12);
+        border-radius: 8px;
+        background: rgba(248, 250, 252, .97);
+        color: #0f172a;
+        box-shadow: 0 28px 100px rgba(0, 0, 0, .34);
+    }
+
+    .ohc-register-card {
+        width: min(620px, calc(100% - 48px));
+    }
+
+    .ohc-auth-card h2 {
+        margin: 0;
+        color: #0f172a;
+        font-size: clamp(1.85rem, 4vw, 2.65rem);
+        font-weight: 900;
+    }
+
+    .ohc-register-card-title {
+        font-size: clamp(1.85rem, 2.35vw, 2.25rem) !important;
+        line-height: 1.1;
+    }
+
+    .ohc-register-card-title span {
+        display: block;
+    }
+
+    .ohc-muted {
+        margin: 10px 0 0;
+        color: #64748b;
+        line-height: 1.7;
+    }
+
+    .ohc-status {
+        margin-top: 18px;
+        color: #0f766e;
+        font-weight: 700;
+    }
+
+    .ohc-auth-form {
+        display: grid;
+        gap: 18px;
+        margin-top: 28px;
+    }
+
+    .ohc-field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .ohc-auth-form label {
+        display: grid;
+        gap: 8px;
+        min-width: 0;
+        color: #1f2937;
+        font-weight: 800;
+    }
+
+    .ohc-auth-form input {
+        width: 100%;
+        min-width: 0;
+        height: 50px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        background: #fff;
+        color: #0f172a;
+        padding: 0 14px;
+        font: inherit;
+        font-weight: 500;
+        outline: none;
+        transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .ohc-auth-form input:focus {
+        border-color: #0f766e;
+        box-shadow: 0 0 0 4px rgba(20, 184, 166, .16);
+    }
+
+    .ohc-auth-form small,
+    .ohc-error {
+        color: #64748b;
+        font-size: .82rem;
+        font-weight: 600;
+    }
+
+    .ohc-error {
+        color: #b91c1c;
+    }
+
+    .ohc-auth-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 18px;
+        color: #475569;
+        font-size: .92rem;
+    }
+
+    .ohc-check {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 10px !important;
+        color: #475569 !important;
+        font-weight: 700 !important;
+    }
+
+    .ohc-check input {
+        width: 16px;
+        height: 16px;
+        accent-color: #0f766e;
+    }
+
+    .ohc-auth-row a,
+    .ohc-switch a {
+        color: #0f766e;
+        font-weight: 900;
+    }
+
+    .ohc-auth-submit {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 52px;
+        border: 0;
+        border-radius: 6px;
+        background: #0f766e;
+        color: #fff;
+        font-weight: 900;
+        cursor: pointer;
+        transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    .ohc-auth-submit:hover {
+        transform: translateY(-1px);
+        background: #115e59;
+        box-shadow: 0 14px 34px rgba(15, 118, 110, .28);
+    }
+
+    .ohc-switch {
+        margin: 24px 0 0;
+        color: #64748b;
+        text-align: center;
+    }
+
+    @media (max-width: 980px) {
+        .ohc-auth-shell {
+            grid-template-columns: 1fr;
+        }
+
+        .ohc-auth-panel {
+            border-right: 0;
+            border-bottom: 1px solid rgba(148, 163, 184, .18);
+        }
+
+        .ohc-auth-copy {
+            margin: 42px 0 0;
+        }
+
+        .ohc-auth-card {
+            margin: 32px 0;
+            max-height: none;
+        }
+    }
+
+    @media (max-width: 620px) {
+        .ohc-auth-panel {
+            padding: 28px 20px;
+            gap: 18px;
+        }
+
+        .ohc-auth-copy {
+            margin-top: 32px;
+        }
+
+        .ohc-title-line {
+            white-space: normal;
+        }
+
+
+        .ohc-auth-card,
+        .ohc-register-card {
+            width: calc(100% - 32px);
+            padding: 24px 18px;
+        }
+
+        .ohc-field-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .ohc-auth-row {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+}

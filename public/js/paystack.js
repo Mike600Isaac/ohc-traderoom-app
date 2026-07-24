@@ -5,7 +5,7 @@ const COURSE_CONFIG = {
     amount: 25000, // USD 250.00
     currency: "USD",
     image: "images/fixed-income.jpg",
-    kajabi_offer: "cvXpLZGs",
+    external_reference: "cvXpLZGs",
   },
 
   equity: {
@@ -14,7 +14,7 @@ const COURSE_CONFIG = {
     amount: 25000, // USD 250.00
     currency: "USD",
     image: "images/equity.png",
-    kajabi_offer: "CJLCQpeE",
+    external_reference: "CJLCQpeE",
   },
 
   derivatives: {
@@ -23,7 +23,7 @@ const COURSE_CONFIG = {
     amount: 100000, // USD 1,000.00
     currency: "USD",
     image: "images/derivatives.png",
-    kajabi_offer: "Hryxyppr",
+    external_reference: "Hryxyppr",
   },
 
   lmrss: {
@@ -32,7 +32,7 @@ const COURSE_CONFIG = {
     amount: 100000, // USD 1,000.00
     currency: "USD",
     image: "images/lmrss.png",
-    kajabi_offer: "2wijefFy",
+    external_reference: "2wijefFy",
   },
 
   foundation: {
@@ -41,7 +41,7 @@ const COURSE_CONFIG = {
     amount: 34900, // $349.00 in cents
     currency: "USD",
     image: "images/foundation.jpg",
-    kajabi_offer: "35HR5S5m",
+    external_reference: "35HR5S5m",
   },
   trader: {
     id: "trader-path",
@@ -49,7 +49,7 @@ const COURSE_CONFIG = {
     amount: 89900, // $899.00 in cents
     currency: "USD",
     image: "images/trader.jpg",
-    kajabi_offer: "GU6kJScX",
+    external_reference: "GU6kJScX",
   },
   investor: {
     id: "investor-path",
@@ -57,7 +57,7 @@ const COURSE_CONFIG = {
     amount: 109900, // $1,099.00 in cents
     currency: "USD",
     image: "images/investor.webp",
-    kajabi_offer: "Eag8wEbS",
+    external_reference: "Eag8wEbS",
   },
   ultimate: {
     id: "ultimate-path",
@@ -65,7 +65,7 @@ const COURSE_CONFIG = {
     amount: 149900, // $1,499.00 in cents
     currency: "USD",
     image: "images/ultimate.jpg",
-    kajabi_offer: "yDT9hkwp",
+    external_reference: "yDT9hkwp",
   },
 };
 

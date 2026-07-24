@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('member_entitlements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('kajabi_offer_id');
+            $table->string('external_reference')->nullable();
             $table->string('offer_name');
             $table->string('status'); // Active, Inactive
             $table->timestamp('started_at')->nullable();

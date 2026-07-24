@@ -86,7 +86,6 @@
             </a>
             <a
               href="/login"
-              target="_blank"
               class="btn btn--teal nav__login mobile-nav-login"
               style="
                 width: 100%;
@@ -98,16 +97,23 @@
               >Login &nbsp; →</a
             >
           </li>
+          <li class="mobile-nav-register-row">
+            <a href="/register" class="btn btn--outline mobile-nav-register">Create Account</a>
+          </li>
           <li><a href="about.html">About</a></li>
           <li><a href="index.html#solution">Framework</a></li>
           <li><a href="index.html#ecosystem">Courses</a></li>
         </ul>
         <!-- Auth Container -->
         <div class="nav__auth">
-          <!-- Login Button (visible when NOT logged in) -->
+          <!-- Auth buttons (visible when NOT logged in) -->
+          <a
+            href="/register"
+            class="btn btn--outline nav__register"
+            >Register</a
+          >
           <a
             href="/login"
-            target="_blank"
             class="btn btn--teal nav__login"
             >Login &nbsp; →</a
           >
@@ -191,7 +197,93 @@
       </div>
     </nav>
 
+    <div class="market-tape" aria-label="Market instruments">
+      <div class="market-tape__track">
+        <span>EUR/USD <strong>1.0862</strong> <em>+0.18%</em></span>
+        <span>GBP/USD <strong>1.2764</strong> <em>+0.11%</em></span>
+        <span>USD/JPY <strong>156.21</strong> <em>-0.08%</em></span>
+        <span>XAU/USD <strong>2,417.50</strong> <em>+0.32%</em></span>
+        <span>BTC/USD <strong>67,820</strong> <em>+1.24%</em></span>
+        <span>SPX <strong>5,562</strong> <em>+0.27%</em></span>
+        <span>NDX <strong>19,740</strong> <em>+0.41%</em></span>
+        <span>EUR/USD <strong>1.0862</strong> <em>+0.18%</em></span>
+        <span>GBP/USD <strong>1.2764</strong> <em>+0.11%</em></span>
+        <span>USD/JPY <strong>156.21</strong> <em>-0.08%</em></span>
+        <span>XAU/USD <strong>2,417.50</strong> <em>+0.32%</em></span>
+      </div>
+    </div>
+
     <!-- HERO SECTION -->
+    <section class="home-hero" style="display: none !important">
+      <div class="container home-hero__grid">
+        <div class="home-hero__copy">
+          <span class="home-hero__eyebrow">OHC Traderoom OS</span>
+          <h1>Trade, learn, and build wealth with institutional discipline.</h1>
+          <p>
+            A standalone traderoom for serious learners, active traders, and
+            investors who need structured courses, live market sessions, risk
+            systems, and secure account access in one place.
+          </p>
+
+          <div class="home-hero__actions">
+            <a href="/register" class="btn btn--teal">Create Traderoom Account</a>
+            <a href="/login" class="btn btn--ghost">Login to Traderoom</a>
+          </div>
+
+          <div class="home-hero__trust" aria-label="Platform highlights">
+            <span>Standalone registration</span>
+            <span>Secure member access</span>
+            <span>Courses and live rooms</span>
+          </div>
+        </div>
+
+        <div class="trade-terminal" aria-label="Animated market dashboard">
+          <div class="trade-terminal__top">
+            <div>
+              <span>Live Watchlist</span>
+              <strong>Traderoom Pulse</strong>
+            </div>
+            <em>Open Market</em>
+          </div>
+
+          <div class="trade-terminal__chart">
+            <span style="height: 42%"></span>
+            <span style="height: 66%"></span>
+            <span style="height: 51%"></span>
+            <span style="height: 78%"></span>
+            <span style="height: 58%"></span>
+            <span style="height: 88%"></span>
+            <span style="height: 74%"></span>
+            <span style="height: 92%"></span>
+            <span style="height: 69%"></span>
+            <span style="height: 84%"></span>
+          </div>
+
+          <div class="trade-terminal__pairs">
+            <div><span>EUR/USD</span><strong>1.0862</strong><em>+0.18%</em></div>
+            <div><span>GBP/USD</span><strong>1.2764</strong><em>+0.11%</em></div>
+            <div><span>XAU/USD</span><strong>2,417.50</strong><em>+0.32%</em></div>
+            <div><span>BTC/USD</span><strong>67,820</strong><em>+1.24%</em></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container home-hero__stats">
+        <div>
+          <strong>01</strong>
+          <span>Structured learning paths</span>
+        </div>
+        <div>
+          <strong>02</strong>
+          <span>Trading and investor frameworks</span>
+        </div>
+        <div>
+          <strong>03</strong>
+          <span>Secure subscriptions and access control</span>
+        </div>
+      </div>
+    </section>
+
     <section class="hero" style="padding: 60px 0">
       <div class="container">
         <div
@@ -248,6 +340,18 @@
                 discipline.
               </span>
             </p>
+          </div>
+
+          <div class="hero-cta-row">
+            <a href="/register" class="btn btn--teal">Create Your Account</a>
+            <a href="/login" class="btn btn--outline">Member Login</a>
+          </div>
+
+          <div class="hero-proof-strip" aria-label="OHC platform focus areas">
+            <span>Structured courses</span>
+            <span>Live market rooms</span>
+            <span>Investor frameworks</span>
+            <span>Risk-first execution</span>
           </div>
         </div>
 
@@ -327,6 +431,11 @@
                 </svg>
               </div>
             </div>
+
+            <div class="hero-media-caption">
+              <span>Founder briefing</span>
+              <strong>Watch the OHC framework</strong>
+            </div>
           </div>
 
           <!-- MIDDLE: SPLIT CONTENT CARD -->
@@ -356,6 +465,7 @@
                   box-shadow: 0 20px 40px rgba(39, 58, 104, 0.15);
                 "
               >
+                <div class="market-video-badge">Market discipline</div>
                 <video
                   autoplay
                   muted
@@ -365,6 +475,11 @@
                 >
                   <source src="videos/market-loop.mp4" type="video/mp4" />
                 </video>
+                <div class="market-video-strip" aria-hidden="true">
+                  <span>EUR/USD +0.18%</span>
+                  <span>BTC/USD +1.24%</span>
+                  <span>XAU/USD +0.32%</span>
+                </div>
               </div>
 
               <!-- Text: Updated and vertically centered -->
@@ -378,10 +493,10 @@
                     margin: 0;
                   "
                 >
-                  Trading isn’t about being glued to a screen all day; it’s
+                  Trading is not about being glued to a screen all day; it is
                   about precision, timing, and discipline. Our approach focuses
                   on identifying high-probability setups, executing with
-                  clarity, and exiting efficiently—often within minutes.
+                  clarity, and exiting efficiently - often within minutes.
                 </p>
               </div>
             </div>
@@ -424,6 +539,10 @@
                   object-fit: cover;
                 "
               />
+            </div>
+            <div class="hero-media-caption hero-media-caption--right">
+              <span>Trader lifestyle</span>
+              <strong>Build execution habits</strong>
             </div>
           </div>
         </div>
@@ -799,7 +918,7 @@
                 <div class="course-footer">
                   <span class="course-price">Free</span>
                   <a href="course-basics.html" class="course-link"
-                    >Access Module →</a
+                    >Start Free Course -></a
                   >
                 </div>
               </div>
@@ -831,7 +950,7 @@
                 <div class="course-footer">
                   <span class="course-price">$250</span>
                   <a href="course-fixed-income.html" class="course-link"
-                    >Explore Module →</a
+                    >Buy Course -></a
                   >
                 </div>
               </div>
@@ -863,7 +982,7 @@
                 <div class="course-footer">
                   <span class="course-price">$250</span>
                   <a href="course-equity.html" class="course-link"
-                    >Explore Module →</a
+                    >Buy Course -></a
                   >
                 </div>
               </div>
@@ -899,7 +1018,7 @@
                 <div class="course-footer">
                   <span class="course-price">$1,000</span>
                   <a href="course-derivatives.html" class="course-link"
-                    >Explore Module →</a
+                    >Buy Course -></a
                   >
                 </div>
               </div>
@@ -936,7 +1055,7 @@
                 <div class="course-footer">
                   <span class="course-price">$1,000</span>
                   <a href="course-lmrss.html" class="course-link"
-                    >Access System →</a
+                    >Access System -></a
                   >
                 </div>
               </div>
@@ -1059,7 +1178,10 @@
             Join our students who have moved beyond retail speculation to
             institutional mastery.
           </p>
-          <a href="#ecosystem" class="btn btn--teal">Access the Foundations</a>
+          <div class="final-cta-actions">
+            <a href="#ecosystem" class="btn btn--teal">Access the Foundations</a>
+            <a href="/register" class="btn btn--outline">Register for OHC Traderoom</a>
+          </div>
         </div>
       </div>
     </section>
@@ -1196,19 +1318,6 @@
         });
       }
 
-      // ─── Kajabi Auth Detection ───
-      // Kajabi sets a session cookie when a user is logged in.
-      // We check for the presence of common Kajabi auth cookies.
-      (function detectAuth() {
-        const cookies = document.cookie;
-        const isLoggedIn =
-          cookies.includes("_kjb_session") ||
-          cookies.includes("kjb_logged_in") ||
-          cookies.includes("_session_id");
-        if (isLoggedIn) {
-          document.body.classList.add("is-authenticated");
-        }
-      })();
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

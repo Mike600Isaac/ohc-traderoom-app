@@ -16,22 +16,20 @@ class MemberSeeder extends Seeder
 {
     // 1. Create Carrick Jones (Trader Path)
     $carrick = User::create([
-        'kajabi_user_id' => '202588123',
         'first_name'     => 'Carrick',
         'last_name'      => 'Jones',
         'email'          => 'carrickjones.cj@gmail.com',
-        'password'       => Hash::make('12345678'),
+        'password'       => Hash::make('TraderRoom#2026'),
         'current_path'   => 'Trader',
         'status'         => 'Active',
     ]);
 
     // 2. Create Sarah Investor (Standalone Product User)
     $sarah = User::create([
-        'kajabi_user_id' => '202588456',
         'first_name'     => 'Sarah',
         'last_name'      => 'Investor',
         'email'          => 'sarah@example.com',
-        'password'       => Hash::make('12345678'),
+        'password'       => Hash::make('InvestorDesk#2026'),
         'current_path'   => 'Fixed Income', 
         'status'         => 'Active',
     ]);
@@ -39,7 +37,7 @@ class MemberSeeder extends Seeder
     // 3. Add a specific entitlement for Sarah 
     // This matches the title in your CourseController catalog
     $sarah->entitlements()->create([
-        'kajabi_offer_id' => 'offer_999',
+        'external_reference' => 'seed_offer_999',
         'offer_name'      => 'Standalone Fixed Income Offer',
         'product_name'    => 'Fixed Income Analysis', 
         'status'          => 'Active',

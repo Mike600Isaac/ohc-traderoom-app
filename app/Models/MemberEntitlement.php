@@ -8,7 +8,7 @@ class MemberEntitlement extends Model
 {
     protected $fillable = [
         'user_id',
-        'kajabi_offer_id',
+        'external_reference',
         'offer_name',
         'product_name', 
         'offer_type',

@@ -35,10 +35,4 @@ return [
         ],
     ],
 
-    'kajabi' => [
-        'key' => env('KAJABI_API_KEY'),
-        'secret' => env('KAJABI_API_SECRET'),
-        'url' => env('KAJABI_SITE_URL'),
-    ],
-
 ];

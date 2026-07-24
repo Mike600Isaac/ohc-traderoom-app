@@ -335,17 +335,6 @@
         });
       }
 
-      // ─── Kajabi Auth Detection ───
-      (function detectAuth() {
-        const cookies = document.cookie;
-        const isLoggedIn =
-          cookies.includes("_kjb_session") ||
-          cookies.includes("kjb_logged_in") ||
-          cookies.includes("_session_id");
-        if (isLoggedIn) {
-          document.body.classList.add("is-authenticated");
-        }
-      })();
     </script>
   </body>
 </html>

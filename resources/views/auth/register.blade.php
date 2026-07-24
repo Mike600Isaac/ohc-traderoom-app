@@ -1,52 +1,95 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
-
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Register - OHC Traderoom</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="ohc-auth-page">
+    <main class="ohc-auth-shell">
+        <section class="ohc-auth-panel">
+            <a href="/" class="ohc-brand">
+                <span class="ohc-brand-mark">OHC</span>
+                <span class="ohc-brand-divider"></span>
+                <span>Trade Room</span>
             </a>
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+            <div class="ohc-auth-copy">
+                <p class="ohc-eyebrow">Investor-grade onboarding</p>
+                <h1 class="ohc-register-title"><span class="ohc-title-line">Create Traderoom account.</span></h1>
+                <p>Your account will control course access, live sessions, subscriptions, and future investor tools.</p>
+            </div>
+
+            <div class="ohc-fx-ticker" aria-label="Animated currency rates">
+                <div class="ohc-fx-track">
+                    <span>EUR/USD <strong>1.0862</strong></span>
+                    <span>GBP/USD <strong>1.2764</strong></span>
+                    <span>USD/JPY <strong>156.21</strong></span>
+                    <span>XAU/USD <strong>2,417.50</strong></span>
+                    <span>BTC/USD <strong>67,820</strong></span>
+                    <span>EUR/USD <strong>1.0862</strong></span>
+                    <span>GBP/USD <strong>1.2764</strong></span>
+                    <span>USD/JPY <strong>156.21</strong></span>
+                </div>
+            </div>
+
+            <ul class="ohc-security-list">
+                <li>Secure account foundation</li>
+                <li>Backend-verified payments ready</li>
+                <li>Private course access ready</li>
+            </ul>
+        </section>
+
+        <section class="ohc-auth-card ohc-register-card">
+            <p class="ohc-eyebrow">Sign up</p>
+            <h2 class="ohc-register-card-title"><span>Start with OHC</span><span>Traderoom</span></h2>
+            <p class="ohc-muted">Create your secure profile to access courses, live sessions, and member tools.</p>
+
+            <form method="POST" action="{{ route('register') }}" class="ohc-auth-form">
+                @csrf
+
+                <div class="ohc-field-grid">
+                    <label>
+                        <span>First name</span>
+                        <input id="first_name" type="text" name="first_name" value="{{ old('first_name') }}" required autofocus autocomplete="given-name" placeholder="First name">
+                        <x-input-error :messages="$errors->get('first_name')" class="ohc-error" />
+                    </label>
+
+                    <label>
+                        <span>Last name</span>
+                        <input id="last_name" type="text" name="last_name" value="{{ old('last_name') }}" required autocomplete="family-name" placeholder="Last name">
+                        <x-input-error :messages="$errors->get('last_name')" class="ohc-error" />
+                    </label>
+                </div>
+
+                <label>
+                    <span>Email address</span>
+                    <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" placeholder="name@example.com">
+                    <x-input-error :messages="$errors->get('email')" class="ohc-error" />
+                </label>
+
+                <label>
+                    <span>Password</span>
+                    <input id="password" type="password" name="password" required autocomplete="new-password" placeholder="Minimum 12 characters">
+                    <small>Use uppercase, lowercase, number, and symbol.</small>
+                    <x-input-error :messages="$errors->get('password')" class="ohc-error" />
+                </label>
+
+                <label>
+                    <span>Confirm password</span>
+                    <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Repeat password">
+                    <x-input-error :messages="$errors->get('password_confirmation')" class="ohc-error" />
+                </label>
+
+                <button type="submit" class="ohc-auth-submit" aria-label="Create account">
+                    Create account <span aria-hidden="true">→</span>
+                </button>
+            </form>
+
+            <p class="ohc-switch">Already registered? <a href="{{ route('login') }}">Log in</a></p>
+        </section>
+    </main>
+</body>
+</html>
