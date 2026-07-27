@@ -3,12 +3,24 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
-// 1. The Public Homepage (marketing site, served from public/index.html)
+// 1. The Public Homepage
 Route::get('/', function () {
-    return response()->file(public_path('index.html'));
+    return view('home');
 })->name('home');
+
+Route::get('/subscribe/{course}', [PaymentController::class, 'show'])
+    ->middleware(['auth'])
+    ->name('subscribe.show');
+
+Route::post('/subscribe/{course}/pay', [PaymentController::class, 'start'])
+    ->middleware(['auth'])
+    ->name('subscribe.start');
+
+Route::get('/payments/callback', [PaymentController::class, 'callback'])
+    ->name('payments.callback');
 
 // 2. The Member Dashboard (requires login)
 Route::get('/dashboard', [DashboardController::class, 'index'])

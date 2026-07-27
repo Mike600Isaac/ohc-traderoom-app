@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OHC Trade Room — Mastery in Global Investing and Trading</title>
+    <title>OHC Trade Room â€” Mastery in Global Investing and Trading</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/modal.css" />
 
@@ -27,9 +27,24 @@
     />
     <meta name="apple-mobile-web-app-title" content="OHC" />
     <link rel="manifest" href="images/site.webmanifest" />
+    @php
+      $homeUser = auth()->user();
+      $homeAuth = [
+          'authenticated' => auth()->check(),
+          'user' => $homeUser ? [
+              'firstName' => $homeUser->first_name,
+              'lastName' => $homeUser->last_name,
+              'email' => $homeUser->email,
+          ] : null,
+          'checkoutCourse' => request('checkout'),
+      ];
+    @endphp
+    <script>
+      window.OHC_AUTH = @json($homeAuth);
+    </script>
   </head>
 
-  <body>
+  <body class="@auth is-authenticated @endauth">
     <!-- TOP BAR -->
     <div class="topbar">
       <div class="topbar__inner">
@@ -67,7 +82,7 @@
     <!-- HEADER -->
     <nav class="nav">
       <div class="container nav__inner">
-        <a href="index.html" class="nav__logo"
+        <a href="/" class="nav__logo"
           ><img src="images/logo-dark.png" alt="OHC Logo"
         /></a>
         <ul class="nav__links" id="navLinks">
@@ -94,15 +109,15 @@
                 text-align: center;
                 color: white;
               "
-              >Login &nbsp; →</a
+              >Login &nbsp; â†’</a
             >
           </li>
           <li class="mobile-nav-register-row">
             <a href="/register" class="btn btn--outline mobile-nav-register">Create Account</a>
           </li>
           <li><a href="about.html">About</a></li>
-          <li><a href="index.html#solution">Framework</a></li>
-          <li><a href="index.html#ecosystem">Courses</a></li>
+          <li><a href="/#solution">Framework</a></li>
+          <li><a href="/#ecosystem">Courses</a></li>
         </ul>
         <!-- Auth Container -->
         <div class="nav__auth">
@@ -115,28 +130,30 @@
           <a
             href="/login"
             class="btn btn--teal nav__login"
-            >Login &nbsp; →</a
+            >Login &nbsp; â†’</a
           >
           <!-- User Menu (visible when logged in) -->
           <div class="nav__user-menu" id="userMenu">
+          @auth
+          <a href="/dashboard" class="nav__dashboard-link">Dashboard</a>
+          <span class="nav__user-name">{{ trim((auth()->user()->first_name ?? '').' '.(auth()->user()->last_name ?? '')) ?: auth()->user()->email }}</span>
+          @endauth
             <button
               class="user-avatar-btn"
               id="userAvatarBtn"
               aria-label="User menu"
             >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
+              @auth
+              <span class="user-avatar-initials">{{ strtoupper(substr(auth()->user()->first_name ?: auth()->user()->email, 0, 1)) }}</span>
+              @endauth
             </button>
             <div class="user-dropdown" id="userDropdown">
+              @auth
+              <div class="user-dropdown__profile">
+                <strong>{{ trim((auth()->user()->first_name ?? '').' '.(auth()->user()->last_name ?? '')) ?: 'Traderoom Member' }}</strong>
+                <span>{{ auth()->user()->email }}</span>
+              </div>
+              @endauth
               <a href="/dashboard">
                 <svg
                   viewBox="0 0 24 24"
@@ -332,7 +349,7 @@
               "
             >
               <span style="display: block">
-                From beginner to confident investor, OHC’s system gives you the
+                From beginner to confident investor, OHCâ€™s system gives you the
                 structure to turn income into wealth.
               </span>
               <span style="display: block">
@@ -901,7 +918,7 @@
                   This program breaks down the core structure of modern
                   financial markets, including equities, fixed income,
                   commodities, and foreign exchange. Through engaging modules,
-                  you’ll learn how markets are formed, what drives price
+                  youâ€™ll learn how markets are formed, what drives price
                   movements, and how key economic indicators influence trends.
                 </p>
                 <span class="completion-label"
@@ -1078,7 +1095,7 @@
           <span class="course-category">Built in Real Time</span>
           <h2>The Mindset of a Professional</h2>
           <p>
-            Inside the OHC Traderoom, you’re learning from real institutional
+            Inside the OHC Traderoom, youâ€™re learning from real institutional
             experience, not theory. Gabriel Olumide Odediran brings over 20
             years of global market expertise, with a track record spanning
             top-tier institutions such as Deutsche Bank, S&P, Lloyds Banking
@@ -1090,7 +1107,7 @@
             strategies. Now, through OHC, he translates that experience into
             clear, actionable insights giving members a structured, disciplined
             approach to trading and investing, and the tools needed to
-            confidently navigate today’s markets.
+            confidently navigate todayâ€™s markets.
           </p>
 
           <div class="founder-signature">
@@ -1115,7 +1132,7 @@
           </h2>
           <p style="color: rgba(255, 255, 255, 0.7)">
             Our proprietary architecture for long-term autonomy. We don't just
-            teach trading—we build complete financial systems.
+            teach tradingâ€”we build complete financial systems.
           </p>
         </div>
 
@@ -1241,7 +1258,7 @@
         </div>
         <div class="footer__bottom">
           <div class="footer__copy">
-            © 2026 OHC EXECUTION. ALL RIGHTS RESERVED.
+            Â© 2026 OHC EXECUTION. ALL RIGHTS RESERVED.
           </div>
           <div class="footer__disc">
             Trading involves substantial risk of loss. Past performance is not
@@ -1302,7 +1319,7 @@
         });
       });
 
-      // ─── User Menu Toggle ───
+      // â”€â”€â”€ User Menu Toggle â”€â”€â”€
       const userMenu = document.getElementById("userMenu");
       const userAvatarBtn = document.getElementById("userAvatarBtn");
       if (userAvatarBtn && userMenu) {

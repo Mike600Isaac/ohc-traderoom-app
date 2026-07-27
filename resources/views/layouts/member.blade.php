@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OHC Member Portal</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 </head>
 <body class="bg-white font-sans antialiased">
     @php
@@ -17,10 +18,12 @@
             ['label' => 'Workshops',       'href' => '/workshops',   'active' => request()->is('workshops*')],
             ['label' => 'Market Hub',      'href' => '/market-hub',  'active' => request()->is('market-hub*')],
             ['label' => 'Community',       'href' => '/community',   'active' => request()->is('community*')],
+            ['label' => 'Profile',         'href' => '/profile',     'active' => request()->is('profile')],
         ];
 
-        $displayName = Auth::user()->first_name ?? Auth::user()->name;
+        $displayName = trim((Auth::user()->first_name ?? '') . ' ' . (Auth::user()->last_name ?? '')) ?: (Auth::user()->name ?? 'Member');
         $initial = strtoupper(substr($displayName, 0, 1));
+        $avatarUrl = Auth::user()->avatar_url ? asset('storage/' . Auth::user()->avatar_url) : null;
     @endphp
 
     {{-- Member portal nav: deliberately NOT using the shared `.nav` class
@@ -54,12 +57,15 @@
                 @endforeach
             </div>
 
-            {{-- User avatar: letter-only implementation — no image is ever
-                 requested, so there's nothing to break or 404 on. --}}
+            {{-- Member profile avatar --}}
             <div class="flex items-center flex-shrink-0">
-                <div class="user-avatar-btn w-10 h-10 rounded-full bg-[#3d4f6e] flex items-center justify-center cursor-pointer hover:bg-[#2394a0] transition" title="{{ $displayName }}">
-                    <span class="font-bold text-white text-sm">{{ $initial }}</span>
-                </div>
+                <a href="/profile" class="user-avatar-btn member-nav-avatar {{ request()->is('profile') ? 'ring-2 ring-[#2394a0] ring-offset-2 ring-offset-[#0f1e3a]' : '' }}" title="{{ $displayName }}">
+                    @if ($avatarUrl)
+                        <img src="{{ $avatarUrl }}" alt="{{ $displayName }} profile photo">
+                    @else
+                        <span>{{ $initial }}</span>
+                    @endif
+                </a>
             </div>
         </div>
     </nav>

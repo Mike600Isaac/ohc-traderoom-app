@@ -10,15 +10,23 @@ class MemberEntitlement extends Model
         'user_id',
         'external_reference',
         'offer_name',
-        'product_name', 
+        'product_name',
         'offer_type',
         'status',
         'started_at',
         'expires_at',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'started_at' => 'datetime',
+            'expires_at' => 'datetime',
+        ];
+    }
+
     /**
-     * Link back to the user
+     * Link back to the user.
      */
     public function user()
     {

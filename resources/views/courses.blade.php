@@ -12,7 +12,7 @@
         {{-- Page Header --}}
         <header class="mb-10">
             <h1 class="text-3xl font-bold text-[#273a68] mb-2">My Courses</h1>
-            <p class="text-gray-500">Everything in your library, organised by your learning journey.</p>
+            <p class="text-gray-500">Only courses included in your active bundle or standalone purchase are unlocked.</p>
         </header>
 
         {{-- Category Filter Tabs --}}
@@ -35,7 +35,7 @@
                         @if($course['is_owned'])
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <div class="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center group-hover:border-[#2394a0] transition">
-                                    <svg class="w-5 h-5 text-gray-400 ml-0.5 group-hover:text-[#2394a0]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    <svg class="w-5 h-5 text-gray-400 ml-0.5 group-hover:text-[#2394a0] transition" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                 </div>
                             </div>
                         @else
@@ -50,20 +50,25 @@
                     {{-- Content Area --}}
                     <div class="p-6 flex-grow flex flex-col">
                         <span class="text-[#2394a0] text-[10px] font-extrabold tracking-widest uppercase mb-1">{{ $course['category'] }}</span>
-                        <h4 class="font-bold text-[#273a68] text-lg leading-tight mb-4">{{ $course['title'] }}</h4>
+                        <h4 class="font-bold text-[#273a68] text-lg leading-tight mb-2">{{ $course['title'] }}</h4>
+                        <p class="course-access-note">Included in: {{ $course['included_in'] }}</p>
                         
                         <div class="mt-auto">
                             @if($course['is_owned'])
                                 {{-- Progress State --}}
-                                <p class="text-[11px] text-gray-400 mb-2">{{ $course['modules'] ? $course['modules'] . ' modules' : '' }}</p>
-                                <div class="w-full bg-gray-200 h-1.5 rounded-full">
-                                    <div class="bg-[#2394a0] h-full rounded-full" style="width: {{ $course['progress'] }}%"></div>
-                                </div>
-                                <p class="text-[10px] text-gray-500 mt-2 font-bold">{{ $course['progress'] }}% complete</p>
+                                <p class="text-[11px] text-gray-400 mb-2">{{ is_numeric($course['modules']) ? $course['modules'] . ' modules' : $course['modules'] }}</p>
+                                @if($course['progress'] > 0)
+                                    <div class="w-full bg-gray-200 h-1.5 rounded-full">
+                                        <div class="bg-[#2394a0] h-full rounded-full" style="width: {{ $course['progress'] }}%"></div>
+                                    </div>
+                                    <p class="text-[10px] text-gray-500 mt-2 font-bold">{{ $course['progress'] }}% complete</p>
+                                @else
+                                    <span class="course-owned-pill">Access active</span>
+                                @endif
                             @else
                                 {{-- Locked State --}}
-                                <div class="flex justify-between items-center">
-                                    <a href="/unlock/{{ $course['id'] }}" class="btn-unlock">Unlock</a>
+                                <div class="flex justify-between items-center gap-3">
+                                    <a href="{{ $course['unlock_url'] }}" class="btn-unlock">Unlock</a>
                                     <span class="text-[#273a68] font-bold text-sm">{{ $course['price'] }}</span>
                                 </div>
                             @endif
