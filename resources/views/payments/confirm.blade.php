@@ -137,7 +137,7 @@
     @endphp
     <main class="checkout-shell">
       <section class="checkout-brand">
-        <img src="/images/logo.png" alt="OHC Trade Room" />
+        <img src="/images/logo-dark.png" alt="OHC Trade Room" />
         <small>{{ $isFreeCourse ? 'Course access' : 'Secure checkout' }}</small>
         <h1>{{ $isFreeCourse ? 'Activate your Traderoom course.' : 'Confirm your Traderoom access.' }}</h1>
       </section>

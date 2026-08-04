@@ -22,3 +22,9 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# OHC local development artifacts
+/.pnpm-store/
+*.before-*
+/public/hot.stale
+/OHC_Traderoom_OS_*.pdf

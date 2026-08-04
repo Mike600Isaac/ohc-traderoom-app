@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31 69" role="img" aria-label="Interactive Brokers">
+  <defs>
+    <linearGradient id="ibkr-gradient" x1="29.5" y1="49.8" x2="1.1" y2="49.8" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d81222"/>
+      <stop offset="1" stop-color="#960b1a"/>
+    </linearGradient>
+  </defs>
+  <polygon fill="url(#ibkr-gradient)" points="29.5 65.4 1.1 65.4 1.1 34.1 29.5 65.4"/>
+  <circle fill="#d81222" cx="25.5" cy="41.8" r="8.5"/>
+  <polygon fill="#d81222" points="29.5 1.2 1.1 34.1 1.1 65.4 29.5 1.2"/>
+</svg>

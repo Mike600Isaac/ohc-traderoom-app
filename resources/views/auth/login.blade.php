@@ -10,10 +10,8 @@
 <body class="ohc-auth-page ohc-auth-login-page">
     <main class="ohc-auth-shell">
         <section class="ohc-auth-panel">
-            <a href="/" class="ohc-brand">
-                <span class="ohc-brand-mark">OHC</span>
-                <span class="ohc-brand-divider"></span>
-                <span>Trade Room</span>
+            <a href="/" class="ohc-brand" aria-label="OHC Trade Room homepage">
+                <x-brand-logo variant="light" />
             </a>
 
             <div class="ohc-auth-copy">
@@ -22,18 +20,7 @@
                 <p>Access courses, live sessions, investor resources, and protected member tools from one OHC workspace.</p>
             </div>
 
-            <div class="ohc-fx-ticker" aria-label="Animated currency rates">
-                <div class="ohc-fx-track">
-                    <span>EUR/USD <strong>1.0862</strong></span>
-                    <span>GBP/USD <strong>1.2764</strong></span>
-                    <span>USD/JPY <strong>156.21</strong></span>
-                    <span>XAU/USD <strong>2,417.50</strong></span>
-                    <span>BTC/USD <strong>67,820</strong></span>
-                    <span>EUR/USD <strong>1.0862</strong></span>
-                    <span>GBP/USD <strong>1.2764</strong></span>
-                    <span>USD/JPY <strong>156.21</strong></span>
-                </div>
-            </div>
+            @include('components.live-market-tape')
 
             <div class="ohc-signal-card">
                 <div>

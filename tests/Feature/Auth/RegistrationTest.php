@@ -2,7 +2,10 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\User;
+use App\Notifications\OHCVerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -11,13 +14,13 @@ class RegistrationTest extends TestCase
 
     public function test_registration_screen_can_be_rendered(): void
     {
-        $response = $this->get('/register');
-
-        $response->assertStatus(200);
+        $this->get('/register')->assertStatus(200);
     }
 
-    public function test_new_users_can_register(): void
+    public function test_new_users_are_signed_in_and_sent_a_verification_email(): void
     {
+        Notification::fake();
+
         $response = $this->post('/register', [
             'first_name' => 'Test',
             'last_name' => 'User',
@@ -26,7 +29,11 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'SecurePass#2026',
         ]);
 
-        $this->assertGuest();
-        $response->assertRedirect(route('login', absolute: false));
+        $user = User::where('email', 'test@example.com')->firstOrFail();
+
+        $this->assertAuthenticatedAs($user);
+        $this->assertFalse($user->hasVerifiedEmail());
+        $response->assertRedirect(route('verification.notice', absolute: false));
+        Notification::assertSentTo($user, OHCVerifyEmail::class);
     }
 }

@@ -1,0 +1,7 @@
+@extends('layouts.admin')
+@section('title',$item->exists?'Edit Report':'New Report') @section('heading',$item->exists?'Edit Market Report':'Create Market Report')
+@section('content')
+<form method="POST" action="{{ $item->exists?route('admin.reports.update',$item):route('admin.reports.store') }}" class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">@csrf @if($item->exists)@method('PATCH')@endif
+<section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><div class="grid gap-4"><label class="grid gap-2"><span class="text-xs font-black">Title</span><input name="title" value="{{ old('title',$item->title) }}" class="rounded-lg border-slate-300"></label><label class="grid gap-2"><span class="text-xs font-black">Category</span><input name="category" value="{{ old('category',$item->category) }}" placeholder="Macro, Equity, Fixed Income…" class="rounded-lg border-slate-300"></label><label class="grid gap-2"><span class="text-xs font-black">Summary</span><textarea name="summary" rows="4" class="rounded-lg border-slate-300">{{ old('summary',$item->summary) }}</textarea></label><label class="grid gap-2"><span class="text-xs font-black">Report body</span><textarea name="body" rows="18" class="rounded-lg border-slate-300">{{ old('body',$item->body) }}</textarea></label></div></section>
+@include('admin.publishing.status-panel',['item'=>$item,'label'=>'report'])</form>
+@endsection
