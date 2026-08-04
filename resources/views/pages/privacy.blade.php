@@ -8,7 +8,7 @@
       name="description"
       content="Privacy Policy for OHC Trade Room. Learn how we collect, use, and protect your personal data in compliance with the Nigeria Data Protection Act 2023."
     />
-    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" />
     <link rel="stylesheet" href="/css/legal.css" />
     <link
       rel="icon"

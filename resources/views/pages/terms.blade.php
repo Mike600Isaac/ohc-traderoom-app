@@ -8,7 +8,7 @@
       name="description"
       content="Terms of Service for OHC Trade Room. Read the conditions governing your use of our educational trading platform, programmes, and live trading rooms."
     />
-    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" />
     <link rel="stylesheet" href="/css/legal.css" />
     <link
       rel="icon"

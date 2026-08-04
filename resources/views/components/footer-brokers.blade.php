@@ -18,6 +18,9 @@
           <img
             src="{{ asset('images/brokers/cmc-markets-logo.avif') }}"
             alt="CMC Markets"
+            width="112"
+            height="46"
+            style="display:block;max-width:100%;width:112px;height:auto;max-height:46px;object-fit:contain"
             loading="lazy"
             decoding="async"
           />
@@ -42,6 +45,9 @@
           <img
             src="{{ asset('images/brokers/interactive-brokers.svg') }}"
             alt="Interactive Brokers"
+            width="21"
+            height="46"
+            style="display:block;max-width:100%;width:21px;height:46px;object-fit:contain"
             loading="lazy"
             decoding="async"
           />

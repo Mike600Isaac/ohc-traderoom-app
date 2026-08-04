@@ -8,7 +8,7 @@
       name="description"
       content="OHC Trade Room Risk Disclaimer. Understand that our content is educational only, trading carries substantial risk of loss, and past performance does not guarantee future results."
     />
-    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" />
     <link rel="stylesheet" href="/css/legal.css" />
     <link
       rel="icon"

@@ -8,7 +8,7 @@
       name="description"
       content="Cookie Policy for OHC Trade Room. Learn what cookies we use, why we use them, and how you can manage your preferences."
     />
-    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" />
     <link rel="stylesheet" href="/css/legal.css" />
     <link
       rel="icon"

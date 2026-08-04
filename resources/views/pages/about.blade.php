@@ -6,7 +6,7 @@
     <title>About OHC | Institutional Market Intelligence</title>
 
     <!-- Universal Styles -->
-    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" />
     <!-- Page Specific Styles -->
     <link rel="stylesheet" href="/css/about.css" />
     <link
