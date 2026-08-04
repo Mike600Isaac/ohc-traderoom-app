@@ -25,8 +25,8 @@ class RegistrationTest extends TestCase
             'first_name' => 'Test',
             'last_name' => 'User',
             'email' => 'test@example.com',
-            'password' => 'SecurePass#2026',
-            'password_confirmation' => 'SecurePass#2026',
+            'password' => 'Valid1!x',
+            'password_confirmation' => 'Valid1!x',
         ]);
 
         $user = User::where('email', 'test@example.com')->firstOrFail();

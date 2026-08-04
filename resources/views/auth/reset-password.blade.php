@@ -44,7 +44,7 @@
 
                 <label>
                     <span>New password</span>
-                    <input id="password" type="password" name="password" required autocomplete="new-password" placeholder="Minimum 12 characters">
+                    <input id="password" type="password" name="password" required autocomplete="new-password" placeholder="Minimum 8 characters">
                     <x-input-error :messages="$errors->get('password')" class="ohc-error" />
                 </label>
 

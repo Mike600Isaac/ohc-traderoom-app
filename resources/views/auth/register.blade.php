@@ -62,7 +62,7 @@
 
                 <label>
                     <span>Password</span>
-                    <input id="password" type="password" name="password" required autocomplete="new-password" placeholder="Minimum 12 characters">
+                    <input id="password" type="password" name="password" required autocomplete="new-password" placeholder="Minimum 8 characters">
                     <small>Use uppercase, lowercase, number, and symbol.</small>
                     <x-input-error :messages="$errors->get('password')" class="ohc-error" />
                 </label>
