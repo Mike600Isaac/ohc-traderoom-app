@@ -49,6 +49,7 @@
           <li><a href="/about">About</a></li>
           <li><a href="/#solution">Framework</a></li>
           <li><a href="/#ecosystem">Courses</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
         </ul>
         <!-- Auth Container -->
         <div class="nav__auth">

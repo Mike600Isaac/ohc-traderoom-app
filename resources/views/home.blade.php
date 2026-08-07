@@ -118,6 +118,7 @@
           <li><a href="/about">About</a></li>
           <li><a href="/#solution">Framework</a></li>
           <li><a href="/#ecosystem">Courses</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
         </ul>
         <!-- Auth Container -->
         <div class="nav__auth">
@@ -551,7 +552,7 @@
     <!-- 2. PROBLEM SECTION -->
     <section class="section section--problem" id="problem">
       <div class="container">
-        <div style="text-align: center; max-width: 850px; margin: 0 auto 60px">
+        <div style="text-align: center; max-width: 850px; margin: 0 auto 40px">
           <span class="problem-label">The Market Reality</span>
           <h2>Why most participants fail to scale</h2>
           <p>
@@ -564,6 +565,7 @@
         <div class="problem-grid">
           <!-- Card 1 -->
           <div class="glass-card">
+            <div class="glass-card-heading">
             <div class="glass-icon">
               <svg
                 width="24"
@@ -579,6 +581,7 @@
               </svg>
             </div>
             <h3>No Repeatable System</h3>
+            </div>
             <p>
               Most traders hop between indicators and strategies, never
               mastering a single process. They lack the "Playbook" required for
@@ -588,6 +591,7 @@
 
           <!-- Card 2 -->
           <div class="glass-card">
+            <div class="glass-card-heading">
             <div class="glass-icon">
               <svg
                 width="24"
@@ -601,6 +605,7 @@
               </svg>
             </div>
             <h3>Emotional Decision Making</h3>
+            </div>
             <p>
               Retail decisions are frequently driven by FOMO or panic.
               Institutional success requires removing the "human element"
@@ -610,6 +615,7 @@
 
           <!-- Card 3 -->
           <div class="glass-card">
+            <div class="glass-card-heading">
             <div class="glass-icon">
               <svg
                 width="24"
@@ -625,6 +631,7 @@
               </svg>
             </div>
             <h3>Fragile Risk Management</h3>
+            </div>
             <p>
               Without a capital protection framework, one outlier event can
               liquidate months of progress. We teach you how to engineer trades
@@ -711,9 +718,10 @@
 
     <!-- 4. PATHS SECTION -->
     <!-- 4. PATHS SECTION -->
-    <section class="section section--paths" id="paths">
+    <section class="section section--paths">
+      <span id="paths" class="legacy-section-anchor" aria-hidden="true"></span>
       <div class="container">
-        <div style="text-align: center; max-width: 850px; margin: 0 auto 60px">
+        <div id="pricing" class="pricing-section-header" style="text-align: center; max-width: 850px; margin: 0 auto 60px">
           <span class="problem-label">The Roadmap</span>
           <h2>
             Choose Your Path to <span class="teal-text">Financial Freedom</span>
@@ -1165,21 +1173,21 @@
       style="
         text-align: center;
         background: var(--white);
-        padding: 40px 0 40px 0;
+        padding: 36px 0;
       "
     >
       <div class="container">
         <div style="max-width: 700px; margin: 0 auto">
-          <h2 style="margin-bottom: 30px">
+          <h2 style="margin-bottom: 18px">
             Your Path to Autonomy <span class="teal-text">Starts Here.</span>
           </h2>
-          <p style="margin-bottom: 50px">
+          <p style="margin-bottom: 28px; line-height: 1.55">
             Join our students who have moved beyond retail speculation to
             institutional mastery.
           </p>
-          <div class="final-cta-actions">
-            <a href="#ecosystem" class="btn btn--teal">Access the Foundations</a>
-            <a href="/register" class="btn btn--outline">Register for OHC Traderoom</a>
+          <div class="final-cta-actions" style="gap: 12px">
+            <a href="#ecosystem" class="btn btn--teal" style="padding: 14px 30px">Access the Foundations</a>
+            <a href="/register" class="btn btn--outline" style="padding: 14px 30px">Register for OHC Traderoom</a>
           </div>
         </div>
       </div>
@@ -1326,9 +1334,9 @@
         slidesPerView: 1,
         spaceBetween: 40,
         loop: true,
-        speed: 6500,
+        speed: 650,
         autoplay: {
-          delay: 0,
+          delay: 4500,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         },
@@ -1373,7 +1381,7 @@
           if (!isCourseScrollPaused) return;
           isCourseScrollPaused = false;
 
-          swiper.setTransition(6500);
+          swiper.setTransition(650);
           if (swiper.autoplay) swiper.autoplay.start();
         };
 

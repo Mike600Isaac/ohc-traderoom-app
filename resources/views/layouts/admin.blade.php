@@ -7,7 +7,7 @@
     <title>@yield('title', 'Admin') · OHC Trade Room</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-slate-100 text-slate-700 antialiased">
+<body class="ohc-admin-body bg-slate-100 text-slate-700 antialiased">
 @php
     $user = auth()->user();
     $links = [
