@@ -1,0 +1,13 @@
+@extends('layouts.member')
+@section('title', 'Notifications')
+@section('content')
+<div class="workspace-canvas"><div class="ohc-dashboard-container">
+    <x-workspace-heading eyebrow="Account centre" title="Notifications" description="Time-sensitive OHC updates and your delivery preferences.">
+        @if(auth()->user()->unreadNotifications()->exists())
+            <x-slot:actions><form method="POST" action="{{ route('notifications.read-all') }}">@csrf<button class="workspace-button is-secondary">Mark all read</button></form></x-slot:actions>
+        @endif
+    </x-workspace-heading>
+    <div class="workspace-grid notifications-grid"><section class="workspace-card"><div class="workspace-card__heading"><div><p>Inbox</p><h2>Recent notifications</h2></div></div><div class="notification-list">@forelse($notifications as $notification)<form method="POST" action="{{ route('notifications.read',$notification->id) }}" class="notification-item {{ $notification->read_at ? '' : 'is-unread' }}">@csrf @method('PATCH')<button><span></span><div><strong>{{ $notification->data['title'] ?? class_basename($notification->type) }}</strong><p>{{ $notification->data['message'] ?? 'Open this notification for details.' }}</p><time>{{ $notification->created_at->diffForHumans() }}</time></div></button></form>@empty<x-workspace-empty title="You're all caught up" copy="Published reminders and account notifications will appear here." />@endforelse</div>{{ $notifications->links() }}</section>
+        <aside class="workspace-card notification-preferences"><div class="workspace-card__heading"><div><p>Preferences</p><h2>Delivery controls</h2></div></div><form method="POST" action="{{ route('notifications.preferences') }}">@csrf @method('PUT')<div class="preference-table"><header><span>Type</span><span>In-app</span><span>Email</span><span>Push</span></header>@foreach($preferences as $preference)<div><strong>{{ str_replace('_',' ',ucfirst($preference->type)) }}</strong>@foreach(['in_app','email','push'] as $channel)<label><input type="checkbox" name="preferences[{{ $preference->type }}][]" value="{{ $channel }}" {{ $preference->{$channel} ? 'checked' : '' }}><span>{{ ucfirst(str_replace('_',' ',$channel)) }}</span></label>@endforeach</div>@endforeach</div><div class="quiet-hours"><label>Quiet hours start<input type="time" name="quiet_start" value="{{ optional($preferences->first())->quiet_start }}"></label><label>Quiet hours end<input type="time" name="quiet_end" value="{{ optional($preferences->first())->quiet_end }}"></label></div><button class="workspace-button">Save preferences</button><p class="muted-copy">Push delivery activates only after a push provider and device permission are configured.</p></form></aside></div>
+</div></div>
+@endsection

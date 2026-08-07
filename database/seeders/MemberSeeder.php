@@ -21,6 +21,7 @@ class MemberSeeder extends Seeder
         'email'          => 'carrickjones.cj@gmail.com',
         'password'       => Hash::make('TraderRoom#2026'),
         'current_path'   => 'Trader',
+        'role'           => 'super_admin',
         'status'         => 'Active',
     ]);
 

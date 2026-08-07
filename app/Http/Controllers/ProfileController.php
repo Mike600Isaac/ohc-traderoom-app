@@ -12,25 +12,18 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        return view('profile.edit', ['user' => $request->user()]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
         $user->fill($request->safe()->except('avatar'));
+        $emailChanged = $user->isDirty('email');
 
-        if ($user->isDirty('email')) {
+        if ($emailChanged) {
             $user->email_verified_at = null;
         }
 
@@ -44,12 +37,16 @@ class ProfileController extends Controller
 
         $user->save();
 
+        if ($emailChanged) {
+            $user->sendEmailVerificationNotification();
+
+            return Redirect::route('verification.notice')
+                ->with('status', 'verification-email-sent');
+        }
+
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -57,7 +54,6 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
-
         Auth::logout();
 
         if ($user->avatar_url && Storage::disk('public')->exists($user->avatar_url)) {
@@ -65,7 +61,6 @@ class ProfileController extends Controller
         }
 
         $user->delete();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

@@ -27,6 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'avatar_url',
         'current_path',
         'status',
+        'role',
+        'timezone',
         'last_login_at',
     ];
 
@@ -50,7 +52,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'last_login_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Send the OHC account-verification notification synchronously.
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new \App\Notifications\OHCVerifyEmail());
     }
 
     public function entitlements()
@@ -141,4 +152,26 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->activeEntitlements()
             ->contains(fn (MemberEntitlement $entitlement) => in_array($entitlement->{$field}, $values, true));
     }
+
+    public function courseProgress()
+    {
+        return $this->hasMany(CourseProgress::class);
+    }
+
+    public function weeklyGoals()
+    {
+        return $this->hasMany(WeeklyGoal::class);
+    }
+
+
+    public function canAdmin(string $permission): bool
+    {
+        return \App\Support\AdminAccess::allows($this, $permission);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->canAdmin('admin.view');
+    }
+
 }

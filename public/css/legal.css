@@ -410,3 +410,16 @@
     -webkit-overflow-scrolling: touch;
   }
 }
+
+/* <legal-anchor-offset> */
+/* Keep linked legal sections below the sticky site navigation. */
+.legal-section {
+    scroll-margin-top: 120px;
+}
+
+@media (max-width: 768px) {
+    .legal-section {
+        scroll-margin-top: 90px;
+    }
+}
+/* </legal-anchor-offset> */

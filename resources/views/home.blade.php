@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OHC Trade Room â€” Mastery in Global Investing and Trading</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/modal.css" />
+    <title>OHC Trade Room &mdash; Mastery in Global Investing and Trading</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" />
+    <link rel="stylesheet" href="/css/modal.css" />
 
     <link
       rel="stylesheet"
@@ -15,18 +15,18 @@
     <link
       rel="icon"
       type="image/png"
-      href="images/favicon-96x96.png"
+      href="/images/favicon-96x96.png"
       sizes="96x96"
     />
-    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
-    <link rel="shortcut icon" href="images/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="images/apple-touch-icon.png"
+      href="/images/apple-touch-icon.png"
     />
     <meta name="apple-mobile-web-app-title" content="OHC" />
-    <link rel="manifest" href="images/site.webmanifest" />
+    <link rel="manifest" href="/images/site.webmanifest" />
     @php
       $homeUser = auth()->user();
       $homeAuth = [
@@ -83,13 +83,13 @@
     <nav class="nav">
       <div class="container nav__inner">
         <a href="/" class="nav__logo"
-          ><img src="images/logo-dark.png" alt="OHC Logo"
+          ><img src="/images/logo-dark.png" alt="OHC Logo"
         /></a>
         <ul class="nav__links" id="navLinks">
           <li class="mobile-nav-header">
-            <a href="#" class="mobile-nav-logo">
+            <a href="/" class="mobile-nav-logo">
               <img
-                src="images/logo-dark.png"
+                src="/images/logo-dark.png"
                 alt="OHC Logo"
                 style="
                   height: 40px;
@@ -109,15 +109,16 @@
                 text-align: center;
                 color: white;
               "
-              >Login &nbsp; â†’</a
+              >Member Login</a
             >
           </li>
           <li class="mobile-nav-register-row">
-            <a href="/register" class="btn btn--outline mobile-nav-register">Create Account</a>
+            <a href="/register" class="btn btn--outline mobile-nav-register">Create Your Account</a>
           </li>
-          <li><a href="about.html">About</a></li>
+          <li><a href="/about">About</a></li>
           <li><a href="/#solution">Framework</a></li>
           <li><a href="/#ecosystem">Courses</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
         </ul>
         <!-- Auth Container -->
         <div class="nav__auth">
@@ -125,12 +126,12 @@
           <a
             href="/register"
             class="btn btn--outline nav__register"
-            >Register</a
+            >Create Your Account</a
           >
           <a
             href="/login"
             class="btn btn--teal nav__login"
-            >Login &nbsp; â†’</a
+            >Member Login</a
           >
           <!-- User Menu (visible when logged in) -->
           <div class="nav__user-menu" id="userMenu">
@@ -214,21 +215,7 @@
       </div>
     </nav>
 
-    <div class="market-tape" aria-label="Market instruments">
-      <div class="market-tape__track">
-        <span>EUR/USD <strong>1.0862</strong> <em>+0.18%</em></span>
-        <span>GBP/USD <strong>1.2764</strong> <em>+0.11%</em></span>
-        <span>USD/JPY <strong>156.21</strong> <em>-0.08%</em></span>
-        <span>XAU/USD <strong>2,417.50</strong> <em>+0.32%</em></span>
-        <span>BTC/USD <strong>67,820</strong> <em>+1.24%</em></span>
-        <span>SPX <strong>5,562</strong> <em>+0.27%</em></span>
-        <span>NDX <strong>19,740</strong> <em>+0.41%</em></span>
-        <span>EUR/USD <strong>1.0862</strong> <em>+0.18%</em></span>
-        <span>GBP/USD <strong>1.2764</strong> <em>+0.11%</em></span>
-        <span>USD/JPY <strong>156.21</strong> <em>-0.08%</em></span>
-        <span>XAU/USD <strong>2,417.50</strong> <em>+0.32%</em></span>
-      </div>
-    </div>
+    @include('components.live-market-tape')
 
     <!-- HERO SECTION -->
     <section class="home-hero" style="display: none !important">
@@ -276,13 +263,14 @@
             <span style="height: 84%"></span>
           </div>
 
-          <div class="trade-terminal__pairs">
-            <div><span>EUR/USD</span><strong>1.0862</strong><em>+0.18%</em></div>
-            <div><span>GBP/USD</span><strong>1.2764</strong><em>+0.11%</em></div>
-            <div><span>XAU/USD</span><strong>2,417.50</strong><em>+0.32%</em></div>
-            <div><span>BTC/USD</span><strong>67,820</strong><em>+1.24%</em></div>
+          <div class="trade-terminal__pairs" aria-label="Markets covered by OHC education">
+            <div><span>EUR/USD</span><strong>FX</strong></div>
+            <div><span>GBP/USD</span><strong>FX</strong></div>
+            <div><span>Gold</span><strong>Commodity</strong></div>
+            <div><span>Bitcoin</span><strong>Digital asset</strong></div>
           </div>
         </div>
+      </div>
       </div>
 
       <div class="container home-hero__stats">
@@ -349,7 +337,7 @@
               "
             >
               <span style="display: block">
-                From beginner to confident investor, OHCâ€™s system gives you the
+                From beginner to confident investor, OHC&rsquo;s system gives you the
                 structure to turn income into wealth.
               </span>
               <span style="display: block">
@@ -357,11 +345,6 @@
                 discipline.
               </span>
             </p>
-          </div>
-
-          <div class="hero-cta-row">
-            <a href="/register" class="btn btn--teal">Create Your Account</a>
-            <a href="/login" class="btn btn--outline">Member Login</a>
           </div>
 
           <div class="hero-proof-strip" aria-label="OHC platform focus areas">
@@ -392,7 +375,7 @@
           >
             <!-- The Placeholder Image -->
             <img
-              src="images/founder2.png"
+              src="/images/founder2.png"
               alt="Gabriel Odediran - OHC"
               class="video-poster"
               style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8"
@@ -490,12 +473,12 @@
                   playsinline
                   style="width: 100%; height: 100%; object-fit: cover"
                 >
-                  <source src="videos/market-loop.mp4" type="video/mp4" />
+                  <source src="/videos/market-loop.mp4" type="video/mp4" />
                 </video>
                 <div class="market-video-strip" aria-hidden="true">
-                  <span>EUR/USD +0.18%</span>
-                  <span>BTC/USD +1.24%</span>
-                  <span>XAU/USD +0.32%</span>
+                  <span>EUR/USD</span>
+                  <span>BTC/USD</span>
+                  <span>Gold</span>
                 </div>
               </div>
 
@@ -535,7 +518,7 @@
               style="width: 100%; height: 100%; position: relative"
             >
               <img
-                src="images/lifestyle1.png"
+                src="/images/lifestyle1.png"
                 alt="OHC Lifestyle 1"
                 style="
                   position: absolute;
@@ -546,7 +529,7 @@
                 "
               />
               <img
-                src="images/lifestyle2.png"
+                src="/images/lifestyle2.png"
                 alt="OHC Lifestyle 2"
                 style="
                   position: absolute;
@@ -569,7 +552,7 @@
     <!-- 2. PROBLEM SECTION -->
     <section class="section section--problem" id="problem">
       <div class="container">
-        <div style="text-align: center; max-width: 850px; margin: 0 auto 60px">
+        <div style="text-align: center; max-width: 850px; margin: 0 auto 40px">
           <span class="problem-label">The Market Reality</span>
           <h2>Why most participants fail to scale</h2>
           <p>
@@ -582,6 +565,7 @@
         <div class="problem-grid">
           <!-- Card 1 -->
           <div class="glass-card">
+            <div class="glass-card-heading">
             <div class="glass-icon">
               <svg
                 width="24"
@@ -597,6 +581,7 @@
               </svg>
             </div>
             <h3>No Repeatable System</h3>
+            </div>
             <p>
               Most traders hop between indicators and strategies, never
               mastering a single process. They lack the "Playbook" required for
@@ -606,6 +591,7 @@
 
           <!-- Card 2 -->
           <div class="glass-card">
+            <div class="glass-card-heading">
             <div class="glass-icon">
               <svg
                 width="24"
@@ -619,6 +605,7 @@
               </svg>
             </div>
             <h3>Emotional Decision Making</h3>
+            </div>
             <p>
               Retail decisions are frequently driven by FOMO or panic.
               Institutional success requires removing the "human element"
@@ -628,6 +615,7 @@
 
           <!-- Card 3 -->
           <div class="glass-card">
+            <div class="glass-card-heading">
             <div class="glass-icon">
               <svg
                 width="24"
@@ -643,6 +631,7 @@
               </svg>
             </div>
             <h3>Fragile Risk Management</h3>
+            </div>
             <p>
               Without a capital protection framework, one outlier event can
               liquidate months of progress. We teach you how to engineer trades
@@ -729,9 +718,10 @@
 
     <!-- 4. PATHS SECTION -->
     <!-- 4. PATHS SECTION -->
-    <section class="section section--paths" id="paths">
+    <section class="section section--paths">
+      <span id="paths" class="legacy-section-anchor" aria-hidden="true"></span>
       <div class="container">
-        <div style="text-align: center; max-width: 850px; margin: 0 auto 60px">
+        <div id="pricing" class="pricing-section-header" style="text-align: center; max-width: 850px; margin: 0 auto 60px">
           <span class="problem-label">The Roadmap</span>
           <h2>
             Choose Your Path to <span class="teal-text">Financial Freedom</span>
@@ -918,7 +908,7 @@
                   This program breaks down the core structure of modern
                   financial markets, including equities, fixed income,
                   commodities, and foreign exchange. Through engaging modules,
-                  youâ€™ll learn how markets are formed, what drives price
+                  you&rsquo;ll learn how markets are formed, what drives price
                   movements, and how key economic indicators influence trends.
                 </p>
                 <span class="completion-label"
@@ -1088,14 +1078,14 @@
       <div class="container founder-wrap">
         <div class="founder-image-container">
           <!-- Replace with your actual high-res founder image -->
-          <img src="images/founder2.png" alt="Gabriel Olumide Odediran" />
+          <img src="/images/founder2.png" alt="Gabriel Olumide Odediran" />
         </div>
 
         <div class="founder-card">
           <span class="course-category">Built in Real Time</span>
           <h2>The Mindset of a Professional</h2>
           <p>
-            Inside the OHC Traderoom, youâ€™re learning from real institutional
+            Inside the OHC Traderoom, you&rsquo;re learning from real institutional
             experience, not theory. Gabriel Olumide Odediran brings over 20
             years of global market expertise, with a track record spanning
             top-tier institutions such as Deutsche Bank, S&P, Lloyds Banking
@@ -1107,7 +1097,7 @@
             strategies. Now, through OHC, he translates that experience into
             clear, actionable insights giving members a structured, disciplined
             approach to trading and investing, and the tools needed to
-            confidently navigate todayâ€™s markets.
+            confidently navigate today&rsquo;s markets.
           </p>
 
           <div class="founder-signature">
@@ -1132,7 +1122,7 @@
           </h2>
           <p style="color: rgba(255, 255, 255, 0.7)">
             Our proprietary architecture for long-term autonomy. We don't just
-            teach tradingâ€”we build complete financial systems.
+            teach trading&mdash;we build complete financial systems.
           </p>
         </div>
 
@@ -1172,7 +1162,7 @@
           <p style="margin-bottom: 40px; color: var(--white)">
             Includes all courses, portfolio strategy, and direct mentorship.
           </p>
-          <a href="#paths" class="btn btn--teal">Build Your Financial System</a>
+          <a href="/#paths" class="btn btn--teal">Build Your Financial System</a>
         </div>
       </div>
     </section>
@@ -1183,21 +1173,21 @@
       style="
         text-align: center;
         background: var(--white);
-        padding: 40px 0 40px 0;
+        padding: 36px 0;
       "
     >
       <div class="container">
         <div style="max-width: 700px; margin: 0 auto">
-          <h2 style="margin-bottom: 30px">
+          <h2 style="margin-bottom: 18px">
             Your Path to Autonomy <span class="teal-text">Starts Here.</span>
           </h2>
-          <p style="margin-bottom: 50px">
+          <p style="margin-bottom: 28px; line-height: 1.55">
             Join our students who have moved beyond retail speculation to
             institutional mastery.
           </p>
-          <div class="final-cta-actions">
-            <a href="#ecosystem" class="btn btn--teal">Access the Foundations</a>
-            <a href="/register" class="btn btn--outline">Register for OHC Traderoom</a>
+          <div class="final-cta-actions" style="gap: 12px">
+            <a href="#ecosystem" class="btn btn--teal" style="padding: 14px 30px">Access the Foundations</a>
+            <a href="/register" class="btn btn--outline" style="padding: 14px 30px">Register for OHC Traderoom</a>
           </div>
         </div>
       </div>
@@ -1209,7 +1199,7 @@
         <div class="footer__top">
           <div class="footer__brand">
             <img
-              src="images/OHC-Trade-Room-light.png"
+              src="/images/OHC-Trade-Room-light.png"
               alt="OHC Trade Room"
               class="footer__logo-img"
             />
@@ -1227,38 +1217,39 @@
           <div class="footer__links">
             <div class="footer__col">
               <div class="footer__col-ttl">Programs</div>
-              <a href="course-basics.html">Markets Basics</a>
-              <a href="course-equity.html">Equity Analysis</a>
-              <a href="course-fixed-income.html">Fixed Income</a>
-              <a href="course-lmrss.html">LMRSS Day Trading</a>
-              <a href="course-derivatives.html">Derivatives</a>
+              <a href="/programs/markets-basics">Markets Basics</a>
+              <a href="/programs/equity-analysis">Equity Analysis</a>
+              <a href="/programs/fixed-income">Fixed Income</a>
+              <a href="/programs/lmrss">LMRSS Day Trading</a>
+              <a href="/programs/derivatives">Derivatives</a>
             </div>
             <div class="footer__col">
               <div class="footer__col-ttl">Company</div>
-              <a href="about.html">About OHC</a>
-              <a href="about.html">Our Philosophy</a>
-              <a href="#flagship">The 3-Bucket System</a>
+              <a href="/about">About OHC</a>
+              <a href="/about">Our Philosophy</a>
+              <a href="/#flagship">The 3-Bucket System</a>
               <a href="mailto:support@ohctraderoom.com">Contact</a>
             </div>
             <div class="footer__col">
               <div class="footer__col-ttl">Bundles</div>
-              <a href="#paths">Foundation Path</a>
-              <a href="#paths">Trader Path</a>
-              <a href="#paths">Investor Path</a>
-              <a href="#paths">Ultimate Path</a>
+              <a href="/#paths">Foundation Path</a>
+              <a href="/#paths">Trader Path</a>
+              <a href="/#paths">Investor Path</a>
+              <a href="/#paths">Ultimate Path</a>
             </div>
             <div class="footer__col">
               <div class="footer__col-ttl">Legal</div>
-              <a href="terms.html">Terms of Service</a>
-              <a href="privacy.html">Privacy Policy</a>
-              <a href="risk-disclaimer.html">Risk Disclaimer</a>
-              <a href="cookie-policy.html">Cookie Policy</a>
+              <a href="/terms">Terms of Service</a>
+              <a href="/privacy">Privacy Policy</a>
+              <a href="/risk-disclaimer">Risk Disclaimer</a>
+              <a href="/cookie-policy">Cookie Policy</a>
             </div>
           </div>
         </div>
+        @include('components.footer-brokers')
         <div class="footer__bottom">
           <div class="footer__copy">
-            Â© 2026 OHC EXECUTION. ALL RIGHTS RESERVED.
+            &copy; 2026 OHC EXECUTION. ALL RIGHTS RESERVED.
           </div>
           <div class="footer__disc">
             Trading involves substantial risk of loss. Past performance is not
@@ -1273,7 +1264,7 @@
       <div class="modal-content">
         <span class="close-modal" id="closeVideo">&times; Close</span>
         <video id="fullVideo" controls>
-          <source src="videos/intro.mp4" type="video/mp4" />
+          <source src="/videos/intro.mp4" type="video/mp4" />
         </video>
       </div>
     </div>
@@ -1343,9 +1334,9 @@
         slidesPerView: 1,
         spaceBetween: 40,
         loop: true,
-        speed: 6500,
+        speed: 650,
         autoplay: {
-          delay: 0,
+          delay: 4500,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         },
@@ -1390,7 +1381,7 @@
           if (!isCourseScrollPaused) return;
           isCourseScrollPaused = false;
 
-          swiper.setTransition(6500);
+          swiper.setTransition(650);
           if (swiper.autoplay) swiper.autoplay.start();
         };
 
@@ -1419,6 +1410,6 @@
       });
     </script>
 
-    <script src="js/paystack.js"></script>
+    <script src="/js/paystack.js"></script>
   </body>
 </html>

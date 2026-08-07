@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Derivatives 101 & Option Greeks — OHC Trade Room</title>
+    <!-- Montserrat Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" />
+    <link rel="stylesheet" href="/css/course-page.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/images/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/images/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="OHC" />
+    <link rel="manifest" href="/images/site.webmanifest" />
+    <style>
+      /* Page Specific Overrides */
+      body {
+        font-family: "Montserrat", sans-serif;
+      }
+      .course-hero__title span {
+        display: block;
+        color: var(--teal);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Nav -->
+    <nav class="nav nav--course">
+      <div class="container">
+        <div class="nav__inner">
+          <a href="/" class="nav__logo">
+            <img
+              src="/images/logo-dark.png"
+              alt="OHC Trade Room"
+              style="height: 45px"
+            />
+          </a>
+          <a
+            href="/#ecosystem"
+            class="btn btn--outline"
+            style="
+              border: 1px solid var(--navy);
+              padding: 10px 24px;
+              font-weight: 600;
+            "
+            >← Back to Home</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <!-- HERO SECTION -->
+      <section class="course-hero">
+        <div class="container course-hero__grid">
+          <div class="course-hero__content">
+            <div class="section-label">Options Mastery</div>
+            <h1 class="course-hero__title">
+              Derivatives 101: <span>Greeks & Strategies</span>
+            </h1>
+            <p class="course-hero__slogan">
+              Instruments, Valuation, Greeks & Advanced Option Strategies.
+            </p>
+
+            <div class="course-hero__philosophy">
+              <p>
+                Options are mathematical instruments. Without understanding
+                their structure, you are speculating — not strategizing.
+              </p>
+              <p>
+                This course changes that. We move beyond surface-level
+                strategies to help you understand exactly how price, time, and
+                volatility drive your P&L.
+              </p>
+            </div>
+
+            <div class="course-hero__actions">
+              <a href="#pricing" class="btn btn--teal btn--lg"
+                >Start Engineering Trades</a
+              >
+              <span class="scroll-note"
+                >Stop guessing. Start calculating. ↓</span
+              >
+            </div>
+          </div>
+
+          <div class="course-hero__visual">
+            <div class="video-frame">
+              <video controls playsinline class="video-frame__video">
+                <source src="/videos/derivatives-intro.mp4" type="video/mp4" />
+              </video>
+              <div class="video-frame__caption">
+                <div class="pulse-icon"></div>
+                The Mathematics of Options
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- THE CHALLENGE -->
+      <section class="section section-challenge" style="padding: 100px 0">
+        <div class="container">
+          <div class="struggle__grid">
+            <div class="struggle__content">
+              <div class="section-label">The Speculator's Trap</div>
+              <h2
+                class="section-title"
+                style="font-weight: 800; font-size: 36px; margin-bottom: 20px"
+              >
+                Why Most Traders Fail With Options
+              </h2>
+              <p
+                class="body-text"
+                style="font-size: 18px; color: var(--navy-light)"
+              >
+                Most retail traders approach options like lottery tickets. They
+                fail because they:
+              </p>
+              <ul class="struggle__list">
+                <li>Trade without understanding pricing mechanics</li>
+                <li>Ignore the massive impact of implied volatility</li>
+                <li>Misunderstand how time decay (Theta) accelerates</li>
+                <li>Use cookie-cutter strategies blindly</li>
+                <li>Confuse high leverage with actual edge</li>
+              </ul>
+            </div>
+            <div class="struggle__image">
+              <img
+                src="/images/item4.png"
+                alt="Derivatives Analysis"
+                class="rounded-img"
+                style="width: 100%; border-radius: 24px"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRANSFORMATION -->
+      <section class="section outcomes bg-navy text-center">
+        <div class="container">
+          <div class="outcomes__header">
+            <h2 class="section-title text-white" style="font-weight: 800">
+              The Transformation
+            </h2>
+            <p style="color: rgba(255, 255, 255, 0.6); margin-top: 15px">
+              Moving from surface-level stacking to structured derivatives
+              intelligence.
+            </p>
+          </div>
+          <div class="outcomes__grid">
+            <div class="outcome-card">
+              <span class="outcome-num">01</span>
+              <p>Understand exactly how Options are Valued</p>
+            </div>
+            <div class="outcome-card">
+              <span class="outcome-num">02</span>
+              <p>
+                Interpret Greeks (Delta, Gamma, Theta, Vega) with Confidence
+              </p>
+            </div>
+            <div class="outcome-card">
+              <span class="outcome-num">03</span>
+              <p>Structure Debit and Credit Strategies Intentionally</p>
+            </div>
+            <div class="outcome-card">
+              <span class="outcome-num">04</span>
+              <p>Optimize Positions rather than "Hope" they work</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CURRICULUM -->
+      <section
+        class="section curriculum"
+        id="curriculum"
+        style="padding: 100px 0"
+      >
+        <div class="container">
+          <div class="section-label text-center">Curriculum</div>
+          <h2
+            class="section-title text-center"
+            style="font-weight: 800; margin-bottom: 40px"
+          >
+            Derivatives Masterclass
+          </h2>
+
+          <div class="module-stack">
+            <div class="module">
+              <div class="module__header">
+                <h3>Foundations & Instruments</h3>
+              </div>
+              <div class="module__body">
+                <ul>
+                  <li>What derivatives truly represent</li>
+                  <li>Call vs Put mechanics and Moneyness</li>
+                  <li>Contract structure and Expiration dynamics</li>
+                  <li>Intrinsic vs Extrinsic value breakdown</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="module">
+              <div class="module__header">
+                <h3>The Mathematics of Valuation</h3>
+              </div>
+              <div class="module__body">
+                <ul>
+                  <li>Pricing logic behind premiums</li>
+                  <li>Time decay (Theta) mechanics</li>
+                  <li>Sensitivity to movement (Delta)</li>
+                  <li>Convexity and acceleration (Gamma)</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="module">
+              <div class="module__header">
+                <h3>Volatility: The Hidden Engine</h3>
+              </div>
+              <div class="module__body">
+                <ul>
+                  <li>Implied vs Historical volatility</li>
+                  <li>Volatility expansion & contraction</li>
+                  <li>Volatility skew and trading logic</li>
+                  <li>Impact on pricing and probability</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="module">
+              <div class="module__header">
+                <h3>Debit & Credit Strategies</h3>
+              </div>
+              <div class="module__body">
+                <ul>
+                  <li>Vertical spreads (Debit & Credit)</li>
+                  <li>Premium harvesting & Income generation</li>
+                  <li>Directional leverage strategies</li>
+                  <li>Probability-based positioning</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="module">
+              <div class="module__header">
+                <h3>Advanced Optimization</h3>
+              </div>
+              <div class="module__body">
+                <ul>
+                  <li>Multi-leg strategies & Rolling</li>
+                  <li>Strategy adjustment techniques</li>
+                  <li>Managing Greeks dynamically</li>
+                  <li>Optimizing risk-reward structures</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRICING -->
+      <section
+        class="section bg-off-white"
+        id="pricing"
+        style="padding: 100px 0"
+      >
+        <div class="container">
+          <div class="section-label text-center">Get Started Today</div>
+          <h2 class="section-title text-center" style="font-weight: 800">
+            Master Derivatives
+          </h2>
+
+          <div
+            class="pricing__stack"
+            style="max-width: 900px; margin: 40px auto 0"
+          >
+            <!-- <div class="pr-row">
+              <div class="pr-row__left">
+                <div class="pr-row__phase">Payment Plan</div>
+                <p class="body-text">
+                  Full access to Phase 04 via flexible payments.
+                </p>
+              </div>
+              <div class="pr-row__right" style="text-align: right">
+                <div class="pr-price">$49<span>/mo</span></div>
+                <p
+                  style="
+                    font-size: 11px;
+                    color: var(--text-muted);
+                    margin-bottom: 15px;
+                  "
+                >
+                  6 monthly payments
+                </p>
+                <a href="#" class="btn btn--teal">Register Now</a>
+              </div>
+            </div> -->
+            <div class="pr-row pr-row--premium">
+              <div class="pr-row__left">
+                <div class="pr-row__phase">Pay In Full</div>
+                <p class="body-text" style="color: rgba(255, 255, 255, 0.7)">
+                  One-time payment for lifetime access to Derivatives 101.
+                </p>
+              </div>
+              <div class="pr-row__right" style="text-align: right">
+                <div class="pr-price">$1000</div>
+                <p
+                  style="
+                    font-size: 11px;
+                    color: rgba(255, 255, 255, 0.4);
+                    margin-bottom: 15px;
+                  "
+                >
+                  One-time payment.
+                </p>
+                <button
+                  class="btn btn--white paystack-btn"
+                  data-course-id="derivatives"
+                >
+                  Register Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INSTRUCTOR -->
+      <section
+        class="section instructor section-challenge"
+        style="padding: 100px 0"
+      >
+        <div class="container">
+          <div class="instructor__grid">
+            <div class="instructor__img">
+              <img
+                src="/images/founder2.png"
+                alt="Gabriel Olumide Odediran"
+                style="width: 100%; border-radius: 24px"
+              />
+            </div>
+            <div class="instructor__content">
+              <div class="section-label">Your Lead Strategist</div>
+              <h2
+                class="section-title"
+                style="font-weight: 800; margin-bottom: 20px"
+              >
+                Gabriel Olumide Odediran
+              </h2>
+              <p
+                class="body-text"
+                style="font-size: 18px; color: var(--navy-light)"
+              >
+                Multi-asset specialist with 18 years professional experience
+                encompassing Fixed Income, Equity and Derivative markets.
+                Gabriel provides a solid understanding of global markets backed
+                by a robust analytical and quantitative background.
+              </p>
+              <div class="expertise-tags">
+                <span>Portfolio Management</span>
+                <span>Asset Liability Management</span>
+                <span>Fundamental Analysis</span>
+                <span>Technical Analysis</span>
+                <span>Risk Management</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ SECTION -->
+      <section
+        class="section faq"
+        style="padding: 100px 0; background-color: var(--white)"
+      >
+        <div class="container" style="max-width: 800px">
+          <h2
+            class="section-title text-center"
+            style="font-weight: 800; margin-bottom: 60px"
+          >
+            Frequently Asked Questions
+          </h2>
+          <div class="faq__list">
+            <details class="faq__item">
+              <summary class="faq__trigger">
+                Are my results guaranteed?
+                <svg
+                  class="faq__icon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </summary>
+              <div class="faq__content">
+                <p>
+                  Like anything in life, you will get out of this bootcamp what
+                  you put into it. While we do offer a 14-day money-back
+                  guarantee, the results you get are up to you. We can promise
+                  that if you commit to the process and put in the work, you
+                  will see results.
+                </p>
+              </div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__trigger">
+                Can I share course info with a friend?
+                <svg
+                  class="faq__icon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </summary>
+              <div class="faq__content">
+                <p>
+                  We encourage referring friends who are ready to commit to the
+                  physical and fiscal discipline required to become an elite
+                  trader. However, access is per-user to ensure personalized
+                  progress tracking.
+                </p>
+              </div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__trigger">
+                Do you have any incentives if I refer a friend?
+                <svg
+                  class="faq__icon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </summary>
+              <div class="faq__content">
+                <p>
+                  Yes! You will receive a $20 credit good for any of our online
+                  courses for each friend you send our way who registers for a
+                  program.
+                </p>
+              </div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__trigger">
+                I loved this course and want more! What else is offered?
+                <svg
+                  class="faq__icon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </summary>
+              <div class="faq__content">
+                <p>
+                  We’re so glad you loved the masterclass. This is Phase 04. If
+                  you haven't completed the earlier phases (Basics, Fixed
+                  Income, Equity), we recommend them. We also offer our flagship
+                  LMRSS Day Trading system for those ready for systematic
+                  intraday execution.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__top">
+          <div class="footer__brand">
+            <img
+              src="/images/OHC-Trade-Room-light.png"
+              alt="OHC Trade Room"
+              class="footer__logo-img"
+            />
+            <p style="color: #fff">
+              Institutional intelligence.<br />Systematic execution.<br />Generational
+              wealth.
+            </p>
+            <div class="footer__contacts">
+              <a href="mailto:support@ohctraderoom.com"
+                >support@ohctraderoom.com</a
+              >
+              <a href="tel:+2347047779807">+234 704 777 9807</a>
+            </div>
+          </div>
+          <div class="footer__links">
+            <div class="footer__col">
+              <div class="footer__col-ttl">Programs</div>
+              <a href="/programs/markets-basics">Markets Basics</a>
+              <a href="/programs/equity-analysis">Equity Analysis</a>
+              <a href="/programs/fixed-income">Fixed Income</a>
+              <a href="/programs/lmrss">LMRSS Day Trading</a>
+              <a href="/programs/derivatives">Derivatives</a>
+            </div>
+            <div class="footer__col">
+              <div class="footer__col-ttl">Company</div>
+              <a href="/about">About OHC</a>
+              <a href="/about">Our Philosophy</a>
+              <a href="/#flagship">The 3-Bucket System</a>
+              <a href="mailto:support@ohctraderoom.com">Contact</a>
+            </div>
+            <div class="footer__col">
+              <div class="footer__col-ttl">Bundles</div>
+              <a href="/#paths">Foundation Path</a>
+              <a href="/#paths">Trader Path</a>
+              <a href="/#paths">Investor Path</a>
+              <a href="/#paths">Ultimate Path</a>
+            </div>
+            <div class="footer__col">
+              <div class="footer__col-ttl">Legal</div>
+              <a href="/terms">Terms of Service</a>
+              <a href="/privacy">Privacy Policy</a>
+              <a href="/risk-disclaimer">Risk Disclaimer</a>
+              <a href="/cookie-policy">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+        @include('components.footer-brokers')
+        <div class="footer__bottom">
+          <div class="footer__copy">
+            © 2026 OHC EXECUTION. ALL RIGHTS RESERVED.
+          </div>
+          <div class="footer__disc">
+            Trading involves substantial risk of loss. Past performance is not
+            indicative of future results.
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/js/paystack.js"></script>
+  </body>
+</html>

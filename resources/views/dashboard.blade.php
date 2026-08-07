@@ -1,136 +1,181 @@
 @extends('layouts.member')
+@section('title', 'Home Workspace')
 
 @section('content')
 @php
-    $paths = ['Foundation', 'Trader', 'Investor', 'Ultimate'];
-    $currentPath = Auth::user()->current_path;
-    $isBundle = in_array($currentPath, $paths);
-    $label = $isBundle ? 'PATH' : 'PLAN';
+    $timezone = $user->timezone ?? 'Africa/Lagos';
+    $localNow = now($timezone);
+    $hour = (int) $localNow->format('G');
+    $greeting = $hour < 12 ? 'Good morning' : ($hour < 17 ? 'Good afternoon' : 'Good evening');
+    $displayName = $user->first_name ?: $user->last_name ?: 'Member';
+    $daysRemaining = $accessEndsAt ? max(0, $localNow->diffInDays($accessEndsAt, false)) : null;
+    $pathLabel = $currentPath ? strtoupper($currentPath) : 'NO ACTIVE PATH';
+    $journeySteps = ['Learn', 'Earn', 'Protect', 'Grow'];
+    $journeyCurrent = $todayFocus ? 0 : null;
+    $goalPercent = $weeklyGoal && $weeklyGoal->target > 0
+        ? min(100, (int) round(($weeklyGoal->completed / $weeklyGoal->target) * 100))
+        : null;
+    $primaryPlanUrl = $gamePlan?->video_url ?: $gamePlan?->pdf_url ?: $gamePlan?->chart_url;
 @endphp
 
-{{-- 1. Hero / Journey Banner --}}
-<section class="bg-[#0f1e3a] py-12 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-6">
-            <div>
-                <h1 class="text-3xl md:text-4xl font-extrabold mb-2">Welcome back, {{ Auth::user()->first_name ?? Auth::user()->name }}</h1>
-                <p class="text-gray-400 text-lg">
-                    You're on the <span class="text-white font-bold">{{ strtoupper($currentPath) }} {{ $label }}</span> 
-                    <span class="mx-2">·</span> Stage 2 of 4 of your journey to financial freedom
-                </p>
-            </div>
-            <div>
-                <span class="bg-[#2394a0] px-6 py-2 rounded-full font-bold text-sm tracking-widest">
-                    {{ strtoupper($currentPath) }} {{ $isBundle ? 'PATH' : '' }}
+<div class="ohc-home-workspace">
+    <section class="ohc-workspace-hero">
+        <div class="ohc-dashboard-container">
+            <div class="ohc-workspace-greeting">
+                <div>
+                    <h1><span data-local-greeting>{{ $greeting }}</span>, {{ $displayName }}</h1>
+                    <p>
+                        <span data-local-dashboard-time>{{ $localNow->format('l j F · g:i A T') }}</span>
+                        <i></i><span>Live provider market data below</span>
+                        <i></i><span>Your account values use recorded OHC data only</span>
+                    </p>
+                </div>
+                <span class="ohc-path-pill">
+                    {{ $pathLabel }}
+                    @if ($daysRemaining !== null)
+                        · {{ $daysRemaining }} days
+                    @elseif ($activeEntitlements->isNotEmpty())
+                        · ACTIVE
+                    @endif
                 </span>
             </div>
+
+            <ol class="ohc-journey" aria-label="Financial journey">
+                @foreach ($journeySteps as $index => $step)
+                    <li class="{{ $journeyCurrent === $index ? 'is-current' : '' }}">
+                        <span>{{ $journeyCurrent !== null && $index < $journeyCurrent ? '✓' : $index + 1 }}</span>
+                        <strong>{{ $step }}</strong>
+                    </li>
+                @endforeach
+            </ol>
+        </div>
+    </section>
+
+    <div class="ohc-dashboard-container ohc-workspace-content">
+        <section class="ohc-status-grid" aria-label="Member status">
+            <article class="ohc-status-card ohc-status-card--teal">
+                <p>Today's Focus</p>
+                <h2>{{ $todayFocus['title'] ?? 'No activity yet' }}</h2>
+                @if ($todayFocus)
+                    <span>{{ $todayFocus['progress'] !== null ? $todayFocus['progress'].'% recorded progress' : 'Ready to continue' }}</span>
+                @else
+                    <a href="{{ route('courses.index') }}">Choose a course</a>
+                @endif
+            </article>
+            <article class="ohc-status-card ohc-status-card--green">
+                <p>Portfolio Health</p>
+                <h2>Not connected</h2>
+                <span>No holdings recorded</span>
+            </article>
+            <article class="ohc-status-card ohc-status-card--purple">
+                <p>Consistency</p>
+                <h2>No score yet</h2>
+                <span>Awaiting activity history</span>
+            </article>
+            <article class="ohc-status-card ohc-status-card--amber">
+                <p>Weekly Goal</p>
+                @if ($weeklyGoal)
+                    <h2>{{ $weeklyGoal->completed }} / {{ $weeklyGoal->target }}</h2>
+                    <span>{{ max(0, $weeklyGoal->target - $weeklyGoal->completed) }} activities to go</span>
+                @else
+                    <h2>Not set</h2>
+                    <span>No target recorded</span>
+                @endif
+            </article>
+        </section>
+
+        <div class="ohc-market-session-row">
+            <x-dashboard-market-grid />
+
+            <section class="ohc-session-card" aria-labelledby="next-session-title">
+                <p class="ohc-session-label"><i></i> Next Live Session</p>
+                @if ($nextSession)
+                    <strong class="ohc-session-countdown" data-session-countdown="{{ $nextSession->starts_at->toIso8601String() }}">-- : -- : --</strong>
+                    <h2 id="next-session-title">{{ $nextSession->title }} · {{ $nextSession->starts_at->timezone($timezone)->format('g:i A T') }}</h2>
+                    <ul>
+                        @if ($nextSession->agenda)<li>{{ \Illuminate\Support\Str::limit($nextSession->agenda, 72) }}</li>@endif
+                        @if ($nextSession->registered_count !== null)<li>{{ $nextSession->registered_count }} members registered</li>@endif
+                        <li>{{ $nextSession->starts_at->timezone($timezone)->format('l, F j') }}</li>
+                    </ul>
+                    @if ($nextSession->join_url)<a href="{{ $nextSession->join_url }}">Join Session</a>@else<span class="ohc-session-disabled">Join link not published</span>@endif
+                @else
+                    <strong class="ohc-session-countdown">-- : -- : --</strong>
+                    <h2 id="next-session-title">No live session scheduled</h2>
+                    <ul><li>A published session will appear here</li><li>No attendance figures are estimated</li></ul>
+                    <span class="ohc-session-disabled">Schedule currently empty</span>
+                @endif
+            </section>
         </div>
 
-        {{-- Journey Stepper (Tailwind Flex) --}}
-        <div class="mt-12 flex items-center w-full max-w-3xl">
-            <div class="flex items-center text-[#2394a0] font-bold">
-                <div class="w-8 h-8 rounded-full bg-[#2394a0] text-white flex items-center justify-center mr-3">✓</div>
-                LEARN
-            </div>
-            <div class="flex-1 h-px bg-gray-700 mx-4"></div>
-            <div class="flex items-center text-[#2394a0] font-bold">
-                <div class="w-8 h-8 rounded-full bg-[#2394a0] text-white flex items-center justify-center mr-3">2</div>
-                EARN
-            </div>
-            <div class="flex-1 h-px bg-gray-700 mx-4"></div>
-            <div class="text-gray-600 font-bold">PROTECT</div>
-            <div class="flex-1 h-px bg-gray-700 mx-4"></div>
-            <div class="text-gray-600 font-bold">GROW</div>
-        </div>
-    </div>
-</section>
-
-{{-- Content below the hero sits on its own off-white section — it no longer
-     overlaps the dark hero, which is what was breaking the translucent
-     .glass-card (it was picking up the navy bg behind it via -mt-8). --}}
-<div class="bg-[#f8fafc]">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-    {{-- 2. Continue Learning (Using your .glass-card from style.css) --}}
-    <h2 class="text-xl font-bold text-[#273a68] mb-4">Continue Learning</h2>
-    <div class="glass-card flex flex-col md:flex-row items-center gap-8 mb-12">
-        <div class="w-full md:w-64 aspect-video bg-black rounded-xl flex items-center justify-center relative overflow-hidden group cursor-pointer">
-            <div class="play-btn w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl group-hover:bg-[#2394a0] transition">
-                <svg class="w-6 h-6 text-[#273a68] group-hover:text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-        </div>
-        <div class="flex-1">
-            <span class="text-[#2394a0] text-xs font-extrabold tracking-widest uppercase">LMRSS Day Trading System</span>
-            <h3 class="text-xl font-bold text-[#273a68] mt-1 mb-4">Module 3 · Lesson 2 — Rotation Setups & Signal Confirmation</h3>
-            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-                <div class="bg-[#2394a0] h-full w-[45%]"></div>
-            </div>
-            <p class="text-xs text-gray-500 mt-2 font-semibold">45% complete</p>
-        </div>
-        <a href="#" class="btn--teal">Resume</a>
-    </div>
-
-    {{-- 3. Today at OHC (Tailwind Grid) --}}
-    <h2 class="text-2xl font-bold text-[#273a68] mb-6">Today at OHC</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div class="glass-card">
-            <span class="text-red-500 font-extrabold text-xs flex items-center gap-2 mb-3">
-                <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span> LIVE TODAY
-            </span>
-            <h3 class="text-lg font-bold text-[#273a68]">OHC Trade Room</h3>
-            <p class="text-gray-500 text-sm mb-6">Live session · 2:00pm WAT</p>
-            <button class="w-full py-3 bg-[#273a68] text-white rounded-xl font-bold hover:bg-[#0f1e3a] transition">Join Live</button>
-        </div>
-
-        <div class="glass-card">
-            <span class="text-[#2394a0] font-extrabold text-xs mb-3 block">WORKSHOP</span>
-            <h3 class="text-lg font-bold text-[#273a68]">Derivatives Workshop</h3>
-            <p class="text-gray-500 text-sm mb-6">Wed Jun 4 · 5:00pm WAT</p>
-            <button class="w-full py-3 bg-[#273a68] text-white rounded-xl font-bold hover:bg-[#0f1e3a] transition">Register</button>
-        </div>
-
-        <div class="glass-card">
-            <span class="text-[#2394a0] font-extrabold text-xs mb-3 block">MARKET HUB</span>
-            <h3 class="text-lg font-bold text-[#273a68]">Daily Game Plan</h3>
-            <p class="text-gray-500 text-sm mb-6">NDX / QQQ — Fri May 30</p>
-            <button class="w-full py-3 bg-[#273a68] text-white rounded-xl font-bold hover:bg-[#0f1e3a] transition">View Report</button>
-        </div>
-    </div>
-
-    {{-- 4. Your Courses --}}
-    <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-[#273a68]">Your Courses</h2>
-        <a href="/courses" class="text-[#2394a0] font-bold hover:underline">View all &rarr;</a>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-20">
-        @php
-            $courses = [
-                ['category' => 'Foundations',    'title' => 'Financial Markets Basics', 'progress' => 95],
-                ['category' => 'Asset Analysis', 'title' => 'Equity Analysis',           'progress' => 55],
-                ['category' => 'Trading System', 'title' => 'LMRSS Day Trading',         'progress' => 45],
-                ['category' => 'Live',           'title' => 'Trade Room Sessions',       'progress' => null],
-            ];
-        @endphp
-        @foreach ($courses as $course)
-            <div class="glass-card !p-0 overflow-hidden group cursor-pointer">
-                <div class="h-40 bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition">
-                    <div class="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center group-hover:border-[#2394a0] transition">
-                        <svg class="w-5 h-5 text-gray-400 ml-0.5 group-hover:text-[#2394a0] transition" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    </div>
+        <section class="ohc-game-plan" aria-labelledby="game-plan-title">
+            <div class="ohc-panel-heading"><h2>Today's Game Plan</h2>@if($primaryPlanUrl)<a href="{{ $primaryPlanUrl }}">Open</a>@endif</div>
+            @if ($gamePlan)
+                <div class="ohc-game-plan__title"><h3 id="game-plan-title">{{ $gamePlan->market ?: 'Market' }} — {{ $gamePlan->title }}</h3>@if($gamePlan->published_at?->isToday())<span>New</span>@endif</div>
+                <div class="ohc-game-plan__body">
+                    <ul>
+                        @if($gamePlan->bias)<li><i class="is-checked">✓</i> Bias: {{ $gamePlan->bias }}</li>@endif
+                        @foreach(array_slice($gamePlan->key_levels ?? [], 0, 2) as $level)<li><i></i> {{ $level }}</li>@endforeach
+                        @if($gamePlan->invalidation)<li><i></i> Invalidation: {{ $gamePlan->invalidation }}</li>@endif
+                        @if(!empty($gamePlan->watchlist))<li><i></i> Watch: {{ implode(', ', $gamePlan->watchlist) }}</li>@endif
+                    </ul>
+                    <div class="ohc-game-plan__links">@if($gamePlan->video_url)<a href="{{ $gamePlan->video_url }}">Video</a>@endif @if($gamePlan->pdf_url)<a href="{{ $gamePlan->pdf_url }}">PDF</a>@endif @if($gamePlan->chart_url)<a href="{{ $gamePlan->chart_url }}">Charts</a>@endif</div>
                 </div>
-                <div class="p-5">
-                    <span class="text-[#2394a0] text-[10px] font-extrabold tracking-widest uppercase">{{ $course['category'] }}</span>
-                    <h4 class="font-bold text-[#273a68] mt-1 mb-3">{{ $course['title'] }}</h4>
-                    @if ($course['progress'] !== null)
-                        <div class="w-full bg-gray-200 h-1.5 rounded-full">
-                            <div class="bg-[#2394a0] h-full rounded-full" style="width: {{ $course['progress'] }}%"></div>
-                        </div>
-                    @else
-                        <span class="inline-block bg-gray-100 text-[#273a68] text-xs font-bold px-3 py-1.5 rounded-full">Open Live Room</span>
-                    @endif
-                </div>
-            </div>
-        @endforeach
+            @else
+                <div class="ohc-game-plan__title"><h3 id="game-plan-title">No game plan published today</h3></div>
+                <p class="ohc-game-plan__empty">The research desk has not published a bias, key levels, invalidation, or watchlist for today.</p>
+            @endif
+        </section>
+
+        <div class="ohc-lower-grid">
+            <section class="ohc-learning-reminder">
+                <p>Learning Reminder</p>
+                @if ($todayFocus)
+                    <h2>Continue “{{ $todayFocus['title'] }}”</h2>
+                    <a href="{{ $todayFocus['url'] }}">Open lesson</a>
+                @else
+                    <h2>No lesson activity has been recorded yet.</h2>
+                    <a href="{{ route('courses.index') }}">Browse courses</a>
+                @endif
+            </section>
+            <section class="ohc-attention-card">
+                <p>Needs Your Attention</p>
+                <ul>
+                    @forelse($attention as $index => $item)
+                        <li class="is-{{ $index + 1 }}"><i></i><span>{{ $item['title'] }}</span><a href="{{ $item['url'] }}">{{ $item['action'] }}</a></li>
+                    @empty
+                        <li class="is-clear"><i></i><span>You're up to date</span></li>
+                    @endforelse
+                </ul>
+            </section>
+        </div>
     </div>
-</div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var timeTarget = document.querySelector('[data-local-dashboard-time]');
+    var greetingTarget = document.querySelector('[data-local-greeting]');
+    function updateClock() {
+        var now = new Date();
+        if (timeTarget) timeTarget.textContent = new Intl.DateTimeFormat(undefined, { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }).format(now);
+        if (greetingTarget) greetingTarget.textContent = now.getHours() < 12 ? 'Good morning' : (now.getHours() < 17 ? 'Good afternoon' : 'Good evening');
+    }
+    updateClock(); window.setInterval(updateClock, 60000);
+
+    var countdown = document.querySelector('[data-session-countdown]');
+    if (countdown) {
+        var target = new Date(countdown.dataset.sessionCountdown).getTime();
+        function updateCountdown() {
+            var distance = Math.max(0, target - Date.now());
+            var hours = Math.floor(distance / 3600000);
+            var minutes = Math.floor((distance % 3600000) / 60000);
+            var seconds = Math.floor((distance % 60000) / 1000);
+            countdown.textContent = [hours, minutes, seconds].map(function (value) { return String(value).padStart(2, '0'); }).join(' : ');
+        }
+        updateCountdown(); window.setInterval(updateCountdown, 1000);
+    }
+});
+</script>
+@endpush

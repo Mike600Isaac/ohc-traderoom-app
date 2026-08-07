@@ -15,17 +15,12 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
     public function create(): View
     {
         return view('auth.register');
     }
 
     /**
-     * Handle an incoming registration request.
-     *
      * @throws ValidationException
      */
     public function store(Request $request): RedirectResponse
@@ -34,7 +29,7 @@ class RegisteredUserController extends Controller
             'first_name' => ['required', 'string', 'max:80'],
             'last_name' => ['required', 'string', 'max:80'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::min(12)->mixedCase()->numbers()->symbols()],
+            'password' => ['required', 'confirmed', Rules\Password::min(8)->mixedCase()->numbers()->symbols()],
         ]);
 
         $user = User::create([
@@ -46,10 +41,14 @@ class RegisteredUserController extends Controller
             'status' => 'Active',
         ]);
 
+        // The Registered event asks MustVerifyEmail users to send their
+        // verification notification. The notification is synchronous, so no
+        // queue worker is required for this critical account email.
         event(new Registered($user));
+        Auth::login($user);
 
         return redirect()
-            ->route('login')
-            ->with('status', 'Your OHC Traderoom account has been created. Please sign in to continue.');
+            ->route('verification.notice')
+            ->with('status', 'verification-email-sent');
     }
 }

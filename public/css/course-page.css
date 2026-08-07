@@ -148,6 +148,9 @@ body {
 
 /* 4. VIDEO FRAME */
 .video-frame {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   position: relative;
   border-radius: var(--radius);
   overflow: hidden;
@@ -158,6 +161,8 @@ body {
 
 .video-frame__video {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   display: block;
   aspect-ratio: 16/9;
 }
@@ -656,4 +661,53 @@ body {
 .modal__btn {
   margin-top: 15px;
   width: 100%;
+}
+
+/* Small-phone responsive hardening */
+@media (max-width: 480px) {
+  .course-hero {
+    padding: 48px 0;
+  }
+
+  .course-hero__title {
+    font-size: clamp(30px, 10vw, 38px);
+    overflow-wrap: anywhere;
+  }
+
+  .course-hero__philosophy p {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .section-label {
+    max-width: 100%;
+    padding: 7px 14px;
+    letter-spacing: 1.4px;
+    white-space: normal;
+  }
+
+  .course-hero__actions,
+  .course-hero__actions .btn {
+    width: 100%;
+  }
+
+  .course-hero__actions .btn {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .video-frame__caption {
+    flex-wrap: wrap;
+    padding: 12px 14px;
+    letter-spacing: 1px;
+    overflow-wrap: anywhere;
+  }
+
+  .module__header {
+    padding: 22px 18px;
+  }
+
+  .module__body {
+    padding: 0 18px 24px;
+  }
 }

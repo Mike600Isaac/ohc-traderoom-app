@@ -7,7 +7,7 @@
 @endpush
 
 <div class="bg-[#f8fafc] min-h-screen pb-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+    <div class="app-container pt-12">
         
         {{-- Page Header --}}
         <header class="mb-10">
@@ -57,13 +57,13 @@
                             @if($course['is_owned'])
                                 {{-- Progress State --}}
                                 <p class="text-[11px] text-gray-400 mb-2">{{ is_numeric($course['modules']) ? $course['modules'] . ' modules' : $course['modules'] }}</p>
-                                @if($course['progress'] > 0)
+                                @if($course['progress'] !== null)
                                     <div class="w-full bg-gray-200 h-1.5 rounded-full">
                                         <div class="bg-[#2394a0] h-full rounded-full" style="width: {{ $course['progress'] }}%"></div>
                                     </div>
                                     <p class="text-[10px] text-gray-500 mt-2 font-bold">{{ $course['progress'] }}% complete</p>
                                 @else
-                                    <span class="course-owned-pill">Access active</span>
+                                    <span class="course-owned-pill">Access active · no progress recorded</span>
                                 @endif
                             @else
                                 {{-- Locked State --}}
